@@ -28,11 +28,11 @@ describe('Get all top level User Profiles', function() {
 
             res.body[0].should.have.property('phone');
             res.body[0].phone.should.be.a('string');
-            res.body[0].phone.should.equal('888-888-8888');
+            res.body[0].phone.should.equal('8888888888');
 
             res.body[0].should.have.property('email');
             res.body[0].email.should.be.a('string');
-            res.body[0].email.should.equal('dan@dan.com');
+            res.body[0].email.should.equal('danhirschklein@gmail.com');
 
             res.body[0].should.have.property('password');
             res.body[0].password.should.be.a('string');
@@ -61,7 +61,7 @@ describe('Get all top level User Profiles', function() {
             res.body[0].update_date.should.equal('NO CLUE');
             res.body[0].should.have.property('case_worker_id');
             res.body[0].case_worker_id.should.be.a('integer');
-            rse.body[0].case_worker_id.should.equal('null')
+            rse.body[0].case_worker_id.should.equal('null');
 
 
 
