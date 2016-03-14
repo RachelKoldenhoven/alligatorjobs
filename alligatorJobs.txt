@@ -1,0 +1,34 @@
+a website app for immigrant job seekers
+
+make it mobile friendly
+
+where users can create a very simple profile that they can then share and refer to when filling out other job applications.
+
+can fill out form in their native language then have it translated into English for sharing.
+
+Job coordinator can access data on users, update user profiles,
+
+pages we need:
+
+index
+register
+login / logout endpoint
+user profile builder || editer
+user profile public
+job coordinator/admin dashboard
+cultural profiles
+    --denver refugee populations (5-6)
+        --why are they a refugee?
+        --job related phrases
+        --foods
+        --holidays
+        --cultural entertainment
+        --translators for this language
+helpful links
+contact page
+
+Stretch goals |==========|
+printable profile
+job board from entry level api call to indeed
+
+watch The Good Lie
