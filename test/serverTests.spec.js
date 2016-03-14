@@ -18,13 +18,13 @@ describe('Get all top level User Profiles', function() {
             res.should.be.json;
             res.body.should.be.a('array');
             res.body.length.should.equal(4);
-            res.body[0].should.have.property('first_name');
-            res.body[0].first_name.should.be.a('string');
-            res.body[0].first_name.should.equal('Dan');
+            res.body[0].should.have.property('f_name');
+            res.body[0].f_name.should.be.a('string');
+            res.body[0].f_name.should.equal('Dan');
 
-            res.body[0].should.have.property('last_name');
-            res.body[0].last_name.should.be.a('string');
-            res.body[0].last_name.should.equal('Klein');
+            res.body[0].should.have.property('l_name');
+            res.body[0].l_name.should.be.a('string');
+            res.body[0].l_name.should.equal('Klein');
 
             res.body[0].should.have.property('phone');
             res.body[0].phone.should.be.a('string');
@@ -38,13 +38,33 @@ describe('Get all top level User Profiles', function() {
             res.body[0].password.should.be.a('string');
             res.body[0].password.should.equal('Bacon');
 
-            res.body[0].channel.should.equal('USA Network');
-            res.body[0].should.have.property('genre');
-            res.body[0].genre.should.equal('Drama');
-            res.body[0].should.have.property('rating');
-            res.body[0].rating.should.equal(3);
-            res.body[0].should.have.property('explicit');
-            res.body[0].explicit.should.equal(false);
+            res.body[0].should.have.property('google_id');
+            res.body[0].google_id.should.be.a('string');
+
+            res.body[0].should.have.property('english');
+            res.body[0].english.should.be.a('integer');
+            res.body[0].english.should.equal('1');
+
+            res.body[0].should.have.property('admin');
+            //might be special case for this, check docs
+            res.body[0].admin.should.be.a('boolean');
+            res.body[0].admin.should.equal(true);
+
+            res.body[0].should.have.property('create_date');
+            //might be special case for this, check docs
+            res.body[0].create_date.should.be.a('date');
+            res.body[0].create_date.should.equal('NO CLUE');
+
+            res.body[0].should.have.property('update_date');
+            //might be special case for this, check docs
+            res.body[0].update_date.should.be.a('date');
+            res.body[0].update_date.should.equal('NO CLUE');
+            res.body[0].should.have.property('case_worker_id');
+            res.body[0].case_worker_id.should.be.a('integer');
+            rse.body[0].case_worker_id.should.equal('null')
+
+
+
             done();
         });
     });
