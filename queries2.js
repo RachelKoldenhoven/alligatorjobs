@@ -11,7 +11,9 @@ function Cultures() {
 module.exports = {
 
     getAllProfiles: function() {
-        return Users().fullOuterJoin('addresses', 'users'.'id', 'addresses'.'user_id')
+        return Users()
+        .fullOuterJoin('addresses', 'users'.'id', 'addresses'.'user_id')
+        .rightJoin
     },
 
     getOneUser: function(id) {
