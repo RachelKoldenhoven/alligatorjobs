@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 var knex = require('knex');
-var queries = require("../../../queries");
+var queries = require("../../../queries2");
 
 router.get('/user/:id', function(req, res, next) {
   res.render('index', { title: 'Express' });
