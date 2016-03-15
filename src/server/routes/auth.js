@@ -6,9 +6,9 @@ var router = express.Router();
 var pg = require('pg');
 var knex = require('knex');
 var passport = require('passport');
-var queries = require("../queries");
+var queries = require("../lib/queries");
 var LocalStrategy = require('passport-local').Strategy;
-var helpers = require('../helpers');
+var helpers = require('../lib/helpers');
 
 
 passport.use(new LocalStrategy({
@@ -55,25 +55,30 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-
 /// google auth ///
-/// create a consent page url /////
-var google = require('googleapis');
-var OAuth2 = google.auth.OAuth2;
+router.get('/google',
+  passport.authenticate('google', { scope:
+    [ 'https://www.googleapis.com/auth/plus.login',
+      'https://www.googleapis.com/auth/plus.profile.emails.read' ] }
+  ));
 
-var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
+router.get( '/google/callback',
+  passport.authenticate( 'google', {
+    successRedirect: '/google/success',
+    failureRedirect: '/google/failure'
+  }));
 
-// generate a url that asks permissions for Google+ and Google Calendar scopes
-var scopes = [
-  'https://www.googleapis.com/auth/plus.me',
-  'https://www.googleapis.com/auth/calendar'
-];
-
-var url = oauth2Client.generateAuthUrl({
-  access_type: 'offline', // 'online' (default) or 'offline' (gets refresh_token)
-  scope: scopes // If you only need one scope you can pass it as string
+router.get('/logout', function(req, res, next) {
+  req.logOut();
+  res.redirect('/');
 });
 
-module.exports = passport;
+module.exports = router;
+
+
+
+
+
+
 
 

@@ -1,5 +1,5 @@
 // *** main dependencies *** //
-require('dotenv').config();
+//require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,7 +7,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var cookieSession = require('cookie-session');
 var Promise = require('bluebird');
+var passport = require('passport');
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 if ( !process.env.NODE_ENV ) { require('dotenv').config();}
 
@@ -39,13 +41,20 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cookieSession({
+  name: 'google-oauth-session-example',
+  keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../client/image')));
 
 // *** google auth *** //
 passport.use(new GoogleStrategy({
-    clientID:     GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3001/auth/google/callback",
+    clientID:     process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.HOST + "/auth/google/callback",
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
@@ -73,7 +82,7 @@ passport.deserializeUser(function(user, done) {
 // *** main routes *** //
 app.use('/', routes);
 app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
+app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 
 
