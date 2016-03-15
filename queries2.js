@@ -45,13 +45,14 @@ module.exports = {
             other_skills: other_skills
         })
         .where('id', id);
+
     }
 
 
 
-    getCulture: function(id) {
-       return Cultures().where('id', id);
-    }
+    // getCulture: function(id) {
+    //    return Cultures().where('id', id);
+    // }
 
 
 };
