@@ -85,20 +85,37 @@ describe('Req 2: Registration Page Functionality', function() {
         .get('/register')
         .expect(200)
         .end(function(err, res) {
-            res.text.should.include('Alligator')
+            res.text.should.include('Register');
         });
     });
 
-    it('2.2 Link to signup page', function(done) {
-        chai.request(server)
-        .get('/register')
-        .expect(200)
-        .end(function(err, res) {
-            res.text.should.include('/signup');
+     it('2.2 Able to register with user/email “test@gtest.com”/"test"', function(done){
+    request(app)
+      .post('/register')
+      .expect(200)
+      .send({ email: 'test@test.com', password: 'test'})
+      .end(function (err, res) {
+            res.text.should.include('Form');
+            done();
         });
     });
 
-     it('2.4 Should display Logo', function(done) {
+    it('2.3 Not be able to register with already existing email/password “danhirschklein@gmail.com”/”TEST”', function(done){
+    request(app)
+      .post('/login')
+      .expect(200)
+      .send({ email: 'danhirschklein@gmail.com', password: 'test'})
+      .end(function (err, res) {
+        res.text.should.not.include('Form');
+        it('Not be able to register with email/password not “TEST”/”TEST”', function(done){
+          res.text.should.include('Register');
+          done();
+        });
+          done();
+        });
+    });
+
+    it('2.3 Should display Logo', function(done) {
         chai.request(server)
         .get('/')
         .expect(200)
@@ -125,8 +142,8 @@ describe('Req 2: Registration Page Functionality', function() {
         });
     });
 
-describe('Req 3: login Page Functionality', function() {
-    it('Text on login page', function(done){
+describe('Req 3: Login Page Functionality', function() {
+    it('3.1 Text on login page', function(done){
     request(app)
       .get('/login')
       .expect(200)
@@ -135,8 +152,7 @@ describe('Req 3: login Page Functionality', function() {
         done();
       });
   });
-
-  it('Able to login with user/email “danhirschklein@gmail.com”/"test"', function(done){
+    it('3.2 Able to login with user/email “danhirschklein@gmail.com”/"test"', function(done){
     request(app)
       .post('/login')
       .expect(200)
@@ -146,8 +162,7 @@ describe('Req 3: login Page Functionality', function() {
         done();
       });
   });
-
-  it('Not be able to login with email/password not “danhirschklein@gmail.com”/”TEST”', function(done){
+    it('3.4 Not be able to login with email/password not “danhirschklein@gmail.com”/”TEST”', function(done){
     request(app)
       .post('/login')
       .expect(200)
@@ -155,15 +170,52 @@ describe('Req 3: login Page Functionality', function() {
       .end(function (err, res) {
         res.text.should.not.include('Form');
           console.log('here');
-        it('Not be able to login with email/password not “TEST”/”TEST”', function(done){
+        it('Not be able to login with email/password not “danhirschklein@gmail.com”/”TEST”', function(done){
           res.text.should.include('Login');
           done();
         });
         done();
       });
-  });
-
+    });
 });
+
+ beforeEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            knex.migrate.latest()
+            .then(function() {
+                return knex.seed.run().then(function() {
+                    done();
+                });
+            });
+        });
+    });
+
+    afterEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            done();
+        });
+    });
+
+describe('Req 4: Culture Page Functionality', function() {
+    it('4.1 Should have links on to individual culture pages', function(done){
+    request(app)
+      .get('/login')
+      .expect(200)
+      .end(function (err, res) {
+        res.text.should.include('<a href="/cultures/:id"');
+        done();
+      });
+    });
+    it('4.2 Should display Logo', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('alligatorjobslogo.png');
+        });
+    });
+});
+
 
 
 //GET ALL PROFILES
@@ -242,7 +294,7 @@ describe('Get all top level User Profiles', function() {
             knex.migrate.latest()
             .then(function() {
                 return knex.seed.run().then(function() {
-                    done()
+                    done();
                 });
             });
         });
