@@ -55,6 +55,10 @@ passport.deserializeUser(function(id, done) {
 });
 
 
+
+/// google auth ///
+
+
 module.exports = passport;
 
 
