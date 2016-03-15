@@ -1,5 +1,5 @@
 // *** main dependencies *** //
-require('dotenv').config();
+//require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,7 +7,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var cookieSession = require('cookie-session');
 var Promise = require('bluebird');
+var passport = require('passport');
+var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+if ( !process.env.NODE_ENV ) { require('dotenv').config();}
+
 
 
 // *** routes *** //
@@ -36,13 +41,48 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cookieSession({
+  name: 'google-oauth-session-example',
+  keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../client/image')));
+
+// *** google auth *** //
+passport.use(new GoogleStrategy({
+    clientID:     process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.HOST + "/auth/google/callback",
+    passReqToCallback   : true
+  },
+  function(request, accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  //later this will be where you selectively send to the browser
+  // an identifier for your user, like their primary key from the
+  // database, or their ID from linkedin
+
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  // here is where you will go to the database and get the
+  // user each time from it's id, after you set up your db
+  done(null, user)
+});
 
 
 // *** main routes *** //
 app.use('/', routes);
 app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
+app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 
 
@@ -77,6 +117,10 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+app.listen(3001, function() {
+  console.log('Express app listening on port 3001');
 });
 
 
