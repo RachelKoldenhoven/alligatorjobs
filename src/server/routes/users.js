@@ -7,9 +7,27 @@ var pg = require('pg');
 var knex = require('knex');
 var queries = require("../../../queries2");
 
-router.get('/user/:id', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+
+
+//Get Single User Profile
+router.get('/user/:id/', function(req, res, next) {
+    var userID = req.params.id;
+    queries.getUser(userID)
+        .then(function(userData) {
+        queries.getUserAddress(userID)
+            .then(function(addressData) {
+            queries.getUserWorkExp(userID)
+                .then(function(workExpData){
+                    res.json(userData, addressData,
+                        workExpData
+                        );
+                    });
+                });
+        });
+
+    });
+
+
 
 router.get('/user/:id/create', function(req, res, next) {
   res.render('index', { title: 'Express' });
