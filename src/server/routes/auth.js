@@ -6,7 +6,7 @@ var router = express.Router();
 var pg = require('pg');
 var knex = require('knex');
 var passport = require('passport');
-var queries = require("../../../queries");
+var queries = require("../../../queries2");
 
 module.exports = router;
 
