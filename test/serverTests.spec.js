@@ -7,7 +7,7 @@ var should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('API routes', function() {
+
 //Do beforeeach because it won't get to after each if there's an error
     beforeEach(function(done) {
         knex.migrate.rollback().then(function() {
@@ -25,6 +25,94 @@ describe('API routes', function() {
             done();
         });
     });
+
+describe('Req 1: Landing Page Functionality', function() {
+    it('1.1 Text of landing page', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('Alligator')
+        });
+    });
+    it('1.2 Link to login page', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('/login');
+        });
+    });
+     it('1.3 Link to registration page', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('/register');
+        });
+    });
+     it('1.4 Should display Logo', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('alligatorjobslogo.png');
+        });
+    });
+});
+
+describe('Req 1: Registration Page Functionality', function() {
+    it('1.1 Text of Registration page', function(done) {
+        chai.request(server)
+        .get('/register')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('Alligator')
+        });
+    });
+    it('1.2 Link to login page', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('/login');
+        });
+    });
+     it('1.3 Link to registration page', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('/register');
+        });
+    });
+     it('1.4 Should display Logo', function(done) {
+        chai.request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+            res.text.should.include('alligatorjobslogo.png');
+        });
+    });
+});
+
+ beforeEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            knex.migrate.latest()
+            .then(function() {
+                return knex.seed.run().then(function() {
+                    done()
+                });
+            });
+        });
+    });
+
+    afterEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            done();
+        });
+    });
+
 
 //GET ALL PROFILES
 describe('Get all top level User Profiles', function() {
@@ -88,7 +176,7 @@ describe('Get all top level User Profiles', function() {
         });
     });
 
-})
+});
 
    //Makes clean slate everytime you run test
     afterEach(function(done) {
@@ -110,24 +198,41 @@ describe('Get all top level User Profiles', function() {
 
 // GET TESTING
 
-// 1) get '/'
-// 2) get '/register'
-// 3) get 'sign-up'
+// 1) get '/' --Test
+// 2) get '/register' --Test
+// 3) get 'sign-up' --test
 
 // 4) get '/login'
-// 5) get '/cultures'
+
+// 5) get '/cultures' --Test
 // 6) get '/cultures/:id'
 
 // 7) get /user/:id
 // 8) get /user/:id/create
 
 // 9) get user/:id/edit
+// 10)get /facebook
+// 11) get /logout
+//12) get /auth/facebook/callback
+//13) get /admin
 
 describe('Get a landing page', function() {
-    it('should render a landing page', function(done) {
+    it('route / render landing page', function(done) {
         chai.request(server)
         .get('/')
         .end(function(err, res) {
+        });
+    });
+});
+
+describe('Get a landing page', function() {
+    it('/register should render registration page', function(done) {
+        chai.request(server)
+        .get('/')
+        .end(function(err, res) {
+        });
+    });
+});
 
     //Get a single show
 describe('Get a single Profile', function() {
@@ -153,5 +258,4 @@ describe('Get a single Profile', function() {
             done();
         });
     });
-
 });
