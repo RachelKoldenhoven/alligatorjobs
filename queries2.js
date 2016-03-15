@@ -27,7 +27,16 @@ module.exports = {
         return 'select * FROM skills FULL JOIN work_exp we ON skills.id = we.skill_id FULL JOIN levels ON levels.id = we.level_id where we.user_id = id';
     },
 
-
+    addUser: function () {
+        return Users()
+        .returning('id')
+        .insert({
+            fname: fname,
+            lname: lname,
+            email: email,
+            password: password
+        });
+    },
 
     getCulture: function(id) {
        return Cultures().where('id', id);
