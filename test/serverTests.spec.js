@@ -61,8 +61,26 @@ describe('Req 1: Landing Page Functionality', function() {
     });
 });
 
-describe('Req 1: Registration Page Functionality', function() {
-    it('1.1 Text of Registration page', function(done) {
+ beforeEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            knex.migrate.latest()
+            .then(function() {
+                return knex.seed.run().then(function() {
+                    done()
+                });
+            });
+        });
+    });
+
+    afterEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            done();
+        });
+    });
+
+
+describe('Req 2: Registration Page Functionality', function() {
+    it('2.1 Text of Registration page', function(done) {
         chai.request(server)
         .get('/register')
         .expect(200)
@@ -70,23 +88,17 @@ describe('Req 1: Registration Page Functionality', function() {
             res.text.should.include('Alligator')
         });
     });
-    it('1.2 Link to login page', function(done) {
+
+    it('2.2 Link to signup page', function(done) {
         chai.request(server)
-        .get('/')
+        .get('/register')
         .expect(200)
         .end(function(err, res) {
-            res.text.should.include('/login');
+            res.text.should.include('/signup');
         });
     });
-     it('1.3 Link to registration page', function(done) {
-        chai.request(server)
-        .get('/')
-        .expect(200)
-        .end(function(err, res) {
-            res.text.should.include('/register');
-        });
-    });
-     it('1.4 Should display Logo', function(done) {
+
+     it('2.4 Should display Logo', function(done) {
         chai.request(server)
         .get('/')
         .expect(200)
@@ -112,6 +124,46 @@ describe('Req 1: Registration Page Functionality', function() {
             done();
         });
     });
+
+describe('Req 3: login Page Functionality', function() {
+    it('Text on login page', function(done){
+    request(app)
+      .get('/login')
+      .expect(200)
+      .end(function (err, res) {
+        res.text.should.include('Login');
+        done();
+      });
+  });
+
+  it('Able to login with user/email “danhirschklein@gmail.com”/"test"', function(done){
+    request(app)
+      .post('/login')
+      .expect(200)
+      .send({ email: 'danhirschklein@gmail.com', password: 'test'})
+      .end(function (err, res) {
+        res.text.should.include('Form');
+        done();
+      });
+  });
+
+  it('Not be able to login with email/password not “danhirschklein@gmail.com”/”TEST”', function(done){
+    request(app)
+      .post('/login')
+      .expect(200)
+      .send({ email: 'TEST1', password: 'TEST1'})
+      .end(function (err, res) {
+        res.text.should.not.include('Form');
+          console.log('here');
+        it('Not be able to login with email/password not “TEST”/”TEST”', function(done){
+          res.text.should.include('Login');
+          done();
+        });
+        done();
+      });
+  });
+
+});
 
 
 //GET ALL PROFILES
@@ -226,7 +278,7 @@ describe('Get a landing page', function() {
 });
 
 describe('Get a landing page', function() {
-    it('/register should render registration page', function(done) {
+    it('/register should render login page', function(done) {
         chai.request(server)
         .get('/')
         .end(function(err, res) {
