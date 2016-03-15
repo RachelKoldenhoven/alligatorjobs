@@ -7,6 +7,25 @@ var should = chai.should();
 
 chai.use(chaiHttp);
 
+describe('API routes', function() {
+//Do beforeeach because it won't get to after each if there's an error
+    beforeEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            knex.migrate.latest()
+            .then(function() {
+                return knex.seed.run().then(function() {
+                    done()
+                });
+            });
+        });
+    });
+
+    afterEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            done();
+        });
+    });
+
 //GET ALL PROFILES
 describe('Get all top level User Profiles', function() {
 
@@ -65,6 +84,72 @@ describe('Get all top level User Profiles', function() {
 
 
 
+            done();
+        });
+    });
+
+})
+
+   //Makes clean slate everytime you run test
+    afterEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            done();
+        })
+    })
+
+    beforeEach(function(done) {
+        knex.migrate.rollback().then(function() {
+            knex.migrate.latest()
+            .then(function() {
+                return knex.seed.run().then(function() {
+                    done()
+                });
+            });
+        });
+    });
+
+// GET TESTING
+
+// 1) get '/'
+// 2) get '/register'
+// 3) get 'sign-up'
+
+// 4) get '/login'
+// 5) get '/cultures'
+// 6) get '/cultures/:id'
+
+// 7) get /user/:id
+// 8) get /user/:id/create
+
+// 9) get user/:id/edit
+
+describe('Get a landing page', function() {
+    it('should render a landing page', function(done) {
+        chai.request(server)
+        .get('/')
+        .end(function(err, res) {
+
+    //Get a single show
+describe('Get a single Profile', function() {
+    it('should add a single show', function(done) {
+        chai.request(server)
+        .get('/api/shows/1')
+        .end(function(err, res) {
+
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body[0].should.be.a('object');
+            res.body.length.should.equal(1);
+            res.body[0].should.have.property('name');
+            res.body[0].name.should.equal('Suits');
+            res.body[0].should.have.property('channel');
+            res.body[0].channel.should.equal('USA Network');
+            res.body[0].should.have.property('genre');
+            res.body[0].genre.should.equal('Drama');
+            res.body[0].should.have.property('rating');
+            res.body[0].rating.should.equal(3);
+            res.body[0].should.have.property('explicit');
+            res.body[0].explicit.should.equal(false);
             done();
         });
     });
