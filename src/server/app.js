@@ -8,6 +8,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 var Promise = require('bluebird');
+var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+if ( !process.env.NODE_ENV ) { require('dotenv').config();}
+
 
 
 // *** routes *** //
@@ -37,6 +40,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
+
+// *** google auth *** //
+passport.use(new GoogleStrategy({
+    clientID:     GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/auth/google/callback",
+    passReqToCallback   : true
+  },
+  function(request, accessToken, refreshToken, profile, done) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  //later this will be where you selectively send to the browser
+  // an identifier for your user, like their primary key from the
+  // database, or their ID from linkedin
+
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  // here is where you will go to the database and get the
+  // user each time from it's id, after you set up your db
+  done(null, user)
+});
 
 
 // *** main routes *** //
@@ -77,6 +108,10 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+app.listen(3001, function() {
+  console.log('Express app listening on port 3001');
 });
 
 
