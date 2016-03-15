@@ -10,19 +10,28 @@ function Cultures() {
 
 module.exports = {
 
-    getAllProfiles: function() {
-        return Users()
-        .fullOuterJoin('addresses', 'users'.'id', 'addresses'.'user_id')
-        .rightJoin
+    getUsers: function() {
+        return Users().select();
     },
 
-    getOneUser: function(id) {
-        return Users().select().where('id', id);
+    getUser: function(id) {
+        return Users().where('id', id);
     },
+
+
+    getUserAddress: function(id) {
+        return knex('addresses').where('user_id', id);
+    },
+
+    getUserWorkExp: function(id){
+        return 'select * FROM skills FULL JOIN work_exp we ON skills.id = we.skill_id FULL JOIN levels ON levels.id = we.level_id where we.user_id = id';
+    },
+
+
 
     getCulture: function(id) {
        return Cultures().where('id', id);
-    },
+    }
 
 
 };
