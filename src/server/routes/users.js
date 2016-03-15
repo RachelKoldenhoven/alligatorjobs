@@ -28,6 +28,7 @@ router.get('/user/:id/', function(req, res, next) {
     }
 
 
+
 router.get('/user/:id/create', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
