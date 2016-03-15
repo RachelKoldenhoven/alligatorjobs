@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.string('name');
     table.string('website');
-    table.string('phone', 9);
+    table.string('phone', 12);
     table.integer('culture_id').references('cultures(id)');
   });
 };

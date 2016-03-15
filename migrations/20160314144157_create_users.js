@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.string('fname').notNullable();
     table.string('lname').notNullable();
-    table.string('phone', 9);
+    table.string('phone', 12);
     table.string('email').notNullable().unique();
     table.string('password');
     table.string('google_id');
