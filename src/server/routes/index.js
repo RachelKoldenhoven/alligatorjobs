@@ -10,23 +10,23 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('register', { title: 'Express' });
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('login', { title: 'Express' });
 });
 
 router.get('/cultures', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('cultures', { title: 'Express' });
 });
 
 router.get('/cultures/:id', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('culture_profile', { title: 'Express' });
 });
 
 router.get('/public/user/:id', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('user', { title: 'Express' });
 });
 
 module.exports = router;
