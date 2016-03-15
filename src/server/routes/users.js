@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var knex = require('knex');
+var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
 
 
