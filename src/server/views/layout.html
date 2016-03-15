@@ -7,8 +7,59 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
+    <header>
+      <nav class="navbar navbar-default" style="margin-top:-2px; margin-bottom: 0px; border-radius: 0px">
+         <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-nav" href="/"><img src="/image/logo.png" class="logo" alt="Alligator Jobs logo image"></a>
+                  <a class="navbar-nav bump-right" href="/"><h4>Alligator Jobs</h4></a>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav" style="margin-left: 20px;">
+                <li class="dropdown">
+                   <a href="/cultures" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Culture Profiles <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/cultures/3">Bhutanese Culture</a></li>
+                        <li><a href="/cultures/2">Burmese Culture</a></li>
+                        <li><a href="/cultures/5">Iraqi Culture</a></li>
+                        <li><a href="/cultures/1">Sudanese Culture</a></li>
+                        <li><a href="/cultures/4">Somali Culture</a></li>
+                    </ul>
+                 </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 50px;">
+                  {% if user %}
+                    <li><a href="/user/:id/createprofile">Create a Profile</a></li>
+                    <li><a href="/user/:id/editprofile">Edit Your Profile</a></li>
+                  {% endif %}
+                    <li>
+                    <a href="/login" style="margin-left: 20px;"><span class="glyphicon glyphicon-user"></span>  Login/Register</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+    </header>
+
     {% block content %}
     {% endblock %}
+    <footer>
+      <div class="container-fluid">
+        <div class="row well">
+          <div class="container">
+            <div class="col-lg-12 text-center">
+              <a href="#"><h3 class="text-warning text-center">Contact Us</h3></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
