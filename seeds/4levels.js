@@ -2,11 +2,20 @@
 exports.seed = function(knex, Promise) {
   return Promise.join(
     // Deletes ALL existing entries
-    knex('table_name').del(), 
+    knex('levels').del(),
 
     // Inserts seed entries
-    knex('table_name').insert({id: 1, colName: 'rowValue'}),
-    knex('table_name').insert({id: 2, colName: 'rowValue2'}),
-    knex('table_name').insert({id: 3, colName: 'rowValue3'})
+    knex('levels').insert({
+        name: 'Interested, 0 years experience'
+    }),
+    knex('levels').insert({
+        name: 'Some experience, 1-2 years'
+    }),
+    knex('levels').insert({
+        name: 'Intermediate, 3-5 years experience'
+    }),
+    knex('levels').insert({
+        name: 'Skilled, 5+ years experience'
+    })
   );
 };

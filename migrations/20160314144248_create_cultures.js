@@ -3,9 +3,11 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.string('name');
     table.string('why');
+    table.string('header_img');
     table.string('phrases_link');
     table.string('foods');
-    table.string('holidays');
+    table.integer('co_num');
+    table.integer('us_num');
   });
 };
 
