@@ -6,7 +6,7 @@ var router = express.Router();
 var pg = require('pg');
 var knex = require('knex');
 var passport = require('passport');
-var queries = require("../lib/queries");
+var queries = require("../../../queries2");
 var LocalStrategy = require('passport-local').Strategy;
 var helpers = require('../lib/helpers');
 
