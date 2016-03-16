@@ -27,15 +27,13 @@ module.exports = {
         return 'select * FROM skills FULL JOIN work_exp we ON skills.id = we.skill_id FULL JOIN levels ON levels.id = we.level_id where we.user_id = id';
     },
 
-    registerUser: function () {
-        return Users()
-        .returning('id')
-        .insert({
-            fname: fname,
-            lname: lname,
-            email: email,
-            password: password
-        });
+    registerUser: function(newUser) {
+        return knex.insert({
+            google_id: newUser.google_id,
+            email: newUser.email,
+            fname: newUser.fname,
+            lname: newUser.lname
+        }).table('users').returning('id');
     },
 
     addNewUserInfo: function (id, english, other_skills) {

@@ -58,11 +58,17 @@ passport.use(new GoogleStrategy({
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+    console.log("prof", profile);
+    process.nextTick(function() {
+      console.log(profile);
+      return done(null, {
+        fname: profile.name.givenName,
+        lname: profile.name.familyName,
+        google_id: profile.id,
+        email: profile.email});
+      });
+    }));
+
 
 passport.serializeUser(function(user, done) {
   //later this will be where you selectively send to the browser
