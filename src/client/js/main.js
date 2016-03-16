@@ -65,18 +65,21 @@ $('#contactSubmit').on('click', function(event) {
     event.preventDefault();
     var phone = $('#phone').val();
     phone = phone.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/\s/g, '');
-    var fname = $('#fname').val();
-    var lname = $('#lname').val();
-    var email = $('#email').val();
-
-//how will i get the id from the url? or req.user? sldkfjdslkjfdslk
+    var dataObject = {
+            fname: $('#fname').val(),
+            lname: $('#lname').val(),
+            email: $('#email').val(),
+            phone: phone
+        };
     var url = $('form').first().attr('action');
 
     $.ajax({
         url: url,
-        method: PUT,
-
-    }).success(function(response) {
+        type: 'PUT',
+        data: dataObject,
+        datatype: 'json',
+        success: function(response) {
         $('#contactMessage').html('<p>'+response.message+'</p>');
-    })
+            }
+    });
 });

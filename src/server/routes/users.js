@@ -55,11 +55,15 @@ router.get('/:id/edit', function(req, res, next) {
 });
 
 router.put('/user/:id/edit-contact', function(req, res, next) {
-  // queries.Users()
-
-  //.then(function(message) {
-      //res.json(message: "sdlkjdslkj")
-    //})
+  var userUpdate = req.body;
+  console.log('The update object', userUpdate);
+  queries.getUser().update({'fname': userUpdate.fname, 'lname': userUpdate.lname, 'email': userUpdate.email, 'phone':userUpdate.phone})
+    .then(function() {
+      res.json({message: 'Contact information updated.'});
+    })
+    .catch(function() {
+      res.json({message: 'Something went wrong.'});
+    });
 });
 
 router.put('/user/:id/edit-address', function(req, res, next) {
