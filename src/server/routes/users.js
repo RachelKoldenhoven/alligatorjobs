@@ -33,10 +33,25 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.get('/:id/edit', function(req, res, next) {
-  res.render('profile_builder', {
-    title: 'Alligator Jobs',
-    user: req.user
-  });
+  var userID = req.params.id;
+  queries.getUser(userID)
+      .then(function(userData) {
+        queries.getUserAddress(userID)
+        .then(function(addressData) {
+            userData.address = addressData;
+          queries.getUserWorkExp(userID)
+            .then(function(workExpData){
+              workExpData = workExpData.rows;
+                res.render('profile_builder', {
+                  title: 'Profile Builder',
+                  user: req.user,
+                  userData: userData[0],
+                  userAddress: userData.address[0],
+                  userSkills: workExpData
+                })
+            });
+        });
+    });
 });
 
 router.put('/user/:id/edit-contact', function(req, res, next) {
