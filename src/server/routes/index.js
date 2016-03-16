@@ -5,7 +5,7 @@ var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express', user: req.user? req.user.fname: "" });
 });
 
 router.get('/register', function(req, res, next) {
