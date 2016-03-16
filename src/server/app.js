@@ -62,9 +62,10 @@ passport.use(new GoogleStrategy({
     process.nextTick(function() {
       console.log(profile);
       return done(null, {
+        id: profile.id,
         fname: profile.name.givenName,
         lname: profile.name.familyName,
-        google_id: profile.id,
+        google_id: profile.google_id,
         email: profile.email});
       });
     }));
