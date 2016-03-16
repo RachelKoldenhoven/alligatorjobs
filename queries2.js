@@ -58,8 +58,8 @@ module.exports = {
             fname: fname,
             lname: lname,
             phone: phone,
-            // english: english,
-            // other_skills: other_skills
+            email: email
+
         })
         .where('id', id);
 
@@ -93,6 +93,19 @@ module.exports = {
             state: state,
             zip: zip
         });
+
+    },
+
+     updateAddress: function (user_id, line_1, line_2, city, state, zip) {
+        return knex('addresses')
+        .update({
+            line_1: line_1,
+            line_2: line_2,
+            city: city,
+            state: state,
+            zip: zip
+        })
+        .where('user_id', user_id);
 
     }
 
