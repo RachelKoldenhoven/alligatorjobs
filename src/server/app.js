@@ -20,6 +20,8 @@ var routes = require('./routes/index.js');
 var authRoutes = require('./routes/auth.js');
 var userRoutes = require('./routes/users.js');
 var adminRoutes = require('./routes/admin.js');
+var cultureRoutes = require('./routes/index.js');
+
 
 
 // *** express instance *** //
@@ -91,6 +93,7 @@ app.use('/', routes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
+app.use('/cultures', cultureRoutes);
 
 
 
