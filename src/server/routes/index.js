@@ -9,7 +9,7 @@ var passport = require('passport');
 
 
 router.get('/', function(req, res, next) {
-  console.log(req.user);
+  //console.log(req.user);
   res.render('index', { title: 'Alligator Jobs', user: req.user });
 });
 
