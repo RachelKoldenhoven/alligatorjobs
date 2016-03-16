@@ -38,9 +38,10 @@ module.exports = {
         });
     },
 
-    addNewUserInfo: function (id, english, other_skills) {
+    addNewUserInfo: function (id, phone, english, other_skills) {
         return Users()
         .update({
+            phone: phone,
             english: english,
             other_skills: other_skills
         })
@@ -48,6 +49,7 @@ module.exports = {
 
     }
 
+//edit profile:Create a triple post query that insert into three tables from one form.
 
 
     // getCulture: function(id) {
