@@ -79,7 +79,21 @@ router.get('/cultures', function(req, res, next) {
 });
 
 router.get('/cultures/:id', function(req, res, next) {
-  res.render('culture_profile', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+    var cultureID = req.params.id;
+    queries.getSingleCulture(cultureID)
+    .then(function(cultureData) {
+        queries.getCultureResources(cultureID)
+        .then(function(resourceData) {
+            cultureData.resources = resourceData;
+            console.log(cultureData);
+            res.render('culture_profile', {
+                title: 'Culture Page',
+                user: req.user? req.user.fname: "",
+                cultureData: cultureData[0],
+                cultureResources: cultureData.resources[0]
+                 });
+        });
+    });
 });
 
 router.get('/public/user/:id', function(req, res, next) {
