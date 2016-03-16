@@ -5,9 +5,11 @@
 
 {% block content %}
     <div class="container">
+        {% if user %}
         <div class="row well">
             <a href="/user/{{user.id}}/edit"><button class="btn btn-primary">Edit Profile</button></a>
         </div>
+        {% endif %}
         <div class="row">
             <h2>{{userData.fname}} {{userData.lname}}</h2>
             <h5>{{userData.email}} | {{userData.phone}}</h5>
