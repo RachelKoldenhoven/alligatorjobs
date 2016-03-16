@@ -54,10 +54,11 @@ router.get('/:id/edit', function(req, res, next) {
     });
 });
 
-router.put('/user/:id/edit-contact', function(req, res, next) {
+router.put('/:id/edit-contact', function(req, res, next) {
   var userUpdate = req.body;
+  console.log('Server-side req.body is', userUpdate);
   console.log('The update object', userUpdate);
-  queries.getUser().update({'fname': userUpdate.fname, 'lname': userUpdate.lname, 'email': userUpdate.email, 'phone':userUpdate.phone})
+  queries.getUser(req.params.id).update({'fname': userUpdate.fname, 'lname': userUpdate.lname, 'email': userUpdate.email, 'phone':userUpdate.phone})
     .then(function() {
       res.json({message: 'Contact information updated.'});
     })
@@ -66,10 +67,10 @@ router.put('/user/:id/edit-contact', function(req, res, next) {
     });
 });
 
-router.put('/user/:id/edit-address', function(req, res, next) {
+router.put('/:id/edit-address', function(req, res, next) {
 });
 
-router.put('/user/:id/edit-skills', function(req, res, next) {
+router.put('/:id/edit-skills', function(req, res, next) {
 });
 
 

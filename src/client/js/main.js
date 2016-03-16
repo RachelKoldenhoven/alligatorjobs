@@ -71,8 +71,7 @@ $('#contactSubmit').on('click', function(event) {
             email: $('#email').val(),
             phone: phone
         };
-    // var url = $('form').first().attr('action');
-    var url = '/user/3/edit';
+    var url = $('form').first().attr('action');
 
     $.ajax({
         url: url,
