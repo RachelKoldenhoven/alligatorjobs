@@ -9,7 +9,8 @@ var passport = require('passport');
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Alligator Jobs', user: req.user? req.user.fname: "" });
+  console.log(req.user);
+  res.render('index', { title: 'Alligator Jobs', user: req.user });
 });
 
 router.get('/register', helpers.loginRedirect, function(req, res, next) {
@@ -90,7 +91,7 @@ router.get('/cultures/:id', function(req, res, next) {
                 title: 'Culture Page',
                 user: req.user? req.user.fname: "",
                 cultureData: cultureData[0],
-                cultureResources: cultureData.resources[0]
+                cultureResources: cultureData.resources
                  });
         });
     });

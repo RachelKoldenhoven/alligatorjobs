@@ -41,22 +41,6 @@ passport.use(new LocalStrategy({
   }
 ));
 
-//// sets the user to 'req.user' and establishes a session via a cookie
-//passport.serializeUser(function(user, done) {
-//  done(null, user.id);
-//});
-//
-//// used on subsequent requests to update 'req.user' and updates session
-//passport.deserializeUser(function(id, done) {
-//  console.log('------------------- serde', id);
-//  knex('users').where('id', id)
-//    .then(function(data) {
-//      return done(null, data[0]);
-//    })
-//    .catch(function(err) {
-//      return done(err);
-//    });
-//});
 
 
 /// google auth ///
@@ -68,19 +52,19 @@ router.get('/google',
 
 router.get( '/google/callback',
   passport.authenticate( 'google', {
-    failureRedirect: '/google/failure'
+    failureRedirect: '/login'
   }), function(req, res, next) {
     //console.log('---------- register user ----------');
-    //console.log(req.user);
-    queries.registerUser(req.user).then(function(id) {
-      //console.log('----- user:', req.user);
-      console.log(id);
-      res.redirect('/');
-    }).catch(function() {
-      //console.log('----- err:', req.user);
-      // TODO: hack for duplicate inserts
-      res.redirect('/');
-    });
+      queries.registerUser(req.user).then(function(id) {
+        //console.log('----- user:', req.user);
+        //console.log("user id yo: " + id);
+        res.redirect('/');
+      }).catch(function() {
+        //console.log('----- err:', req.user);
+        // TODO: hack for duplicate inserts
+        res.redirect('/');
+      });
+    //}
   });
 
 router.get('/logout', function(req, res, next) {
