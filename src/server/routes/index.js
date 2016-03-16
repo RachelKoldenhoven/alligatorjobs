@@ -90,7 +90,7 @@ router.get('/cultures/:id', function(req, res, next) {
                 title: 'Culture Page',
                 user: req.user? req.user.fname: "",
                 cultureData: cultureData[0],
-                cultureResources: cultureData.resources[0]
+                cultureResources: cultureData.resources
                  });
         });
     });
