@@ -18,12 +18,12 @@
                     <span class="icon-bar"></span>
                   </button>
                   <a class="navbar-nav" href="/"><img src="/image/logo.png" class="logo" alt="Alligator Jobs logo image"></a>
-                  <a class="navbar-nav bump-right" href="/"><h4>Alligator Jobs</h4></a>
+                  <a class="navbar-nav navbar-brand bump-right" href="/"><h4>Alligator Jobs</h4></a>
               </div>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" style="margin-left: 20px;">
                 <li class="dropdown">
-                   <a href="/cultures" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Culture Profiles <span class="caret"></span></a>
+                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Culture Profiles <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/cultures/3">Bhutanese Culture</a></li>
                         <li><a href="/cultures/2">Burmese Culture</a></li>
@@ -34,13 +34,22 @@
                  </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" style="margin-right: 50px;">
+                  <li><a href="#"><button class="btn btn-success">Translate</button></a></li>
                   {% if user %}
-                    <li><a href="/user/:id/createprofile">Create a Profile</a></li>
-                    <li><a href="/user/:id/editprofile">Edit Your Profile</a></li>
-                  {% endif %}
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Account <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                          <li><a href="/user/:id">View Your Profile</a></li>
+                          <li><a href="/user/:id/editprofile">Edit Profile</a></li>
+                          <li class="divider"></li>
+                          <li><a href="/logout">Logout</a></li>
+                      </ul>
+                    </li>
+                  {% else %}
                     <li>
                     <a href="/login" style="margin-left: 20px;"><span class="glyphicon glyphicon-user"></span>  Login/Register</a>
                     </li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
@@ -54,7 +63,7 @@
         <div class="row well">
           <div class="container">
             <div class="col-lg-12 text-center">
-              <a href="#"><h3 class="text-warning text-center">Contact Us</h3></a>
+              <a href="#"><h3 class="pop">Contact Us</h3></a>
             </div>
           </div>
         </div>
