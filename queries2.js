@@ -30,6 +30,14 @@ module.exports = {
                         +' where we.user_id ='+id);
     },
 
+    getSingleCulture: function(id) {
+        return knex('cultures').where('id', id);
+    },
+
+    getCultureResources: function(culture_id) {
+        return knex('resources').where('culture_id', culture_id);
+    },
+
     registerUser: function(newUser) {
         return knex.insert({
             google_id: newUser.google_id,
