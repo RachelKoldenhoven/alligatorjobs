@@ -108,13 +108,4 @@ module.exports = {
         .where('user_id', user_id);
 
     }
-
-//edit profile:Create a triple post query that insert into three tables from one form.
-
-
-    // getCulture: function(id) {
-    //    return Cultures().where('id', id);
-    // }
-
-
 };
