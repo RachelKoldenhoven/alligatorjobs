@@ -24,7 +24,10 @@ module.exports = {
     },
 
     getUserWorkExp: function(id){
-        return 'select * FROM skills FULL JOIN work_exp we ON skills.id = we.skill_id FULL JOIN levels ON levels.id = we.level_id where we.user_id = id';
+        return knex.raw('SELECT we.id as we_id, we.user_id as we_user_id, skills.name as skills_name, skills.id as skills_id, levels.id as levels_id, levels.name as levels_name'
+                        +' FROM skills FULL JOIN work_exp we ON skills.id = we.skill_id'
+                        +' FULL JOIN levels ON levels.id = we.level_id'
+                        +' where we.user_id ='+id);
     },
 
     registerUser: function(newUser) {
