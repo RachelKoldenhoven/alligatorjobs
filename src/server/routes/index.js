@@ -4,6 +4,8 @@ var pg = require('pg');
 var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
 var helpers = require('../lib/helpers');
+var passport = require('passport');
+
 
 
 router.get('/', function(req, res, next) {
@@ -51,8 +53,25 @@ router.post('/register', function(req, res, next) {
     });
 });
 
-router.get('/login', function(req, res, next) {
+router.get('/login', helpers.loginRedirect, function(req, res, next) {
   res.render('login', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+});
+
+router.post('/login', function(req, res, next) {
+  console.log(req.body);
+  passport.authenticate('local', function(err, user) {
+    if (err) {
+      return next(err);
+    } else {
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          return res.redirect('/');
+        }
+      });
+    }
+  })(req, res, next);
 });
 
 router.get('/cultures', function(req, res, next) {
