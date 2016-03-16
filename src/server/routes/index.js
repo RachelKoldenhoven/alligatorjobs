@@ -5,27 +5,27 @@ var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', user: req.user? req.user.fname: "" });
+  res.render('index', { title: 'Alligator Jobs', user: req.user? req.user.fname: "" });
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Express' });
+  res.render('register', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Express' });
+  res.render('login', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
 });
 
 router.get('/cultures', function(req, res, next) {
-  res.render('cultures', { title: 'Express' });
+  res.render('cultures', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
 });
 
 router.get('/cultures/:id', function(req, res, next) {
-  res.render('culture_profile', { title: 'Express' });
+  res.render('culture_profile', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
 });
 
 router.get('/public/user/:id', function(req, res, next) {
-  res.render('user', { title: 'Express' });
+  res.render('user', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
 });
 
 module.exports = router;
