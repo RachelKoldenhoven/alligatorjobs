@@ -8,6 +8,24 @@
 <div class="container-fluid">
     <img src={{cultureData.header_img}} alt="Header Image for {{cultureData.name}} Culture Page">
 </div>
+<div class="container">
+    <div class="col-lg-8">
+    <p>{{cultureData.why}}</p>
+    <img src ={{cultureData.phrases_link}} alt="Useful {{cultureData.name}} phrases">
+    </div>
+    <div class="col-lg-4">
+        <p>Foods</p>
+        <p>{{cultureData.foods}}</p><br>
+        <p>Helpful Resources!</p>
+
+        {% for resource in cultureResources %}
+        <p><a href={{resource.website}}>{{resource.name}}</a></p>
+
+        {% endfor %}
+
+
+    </div>
+</div>
 
 
 <p>{{cultureData.name}}</p>
