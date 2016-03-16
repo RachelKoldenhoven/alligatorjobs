@@ -8,8 +8,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 var cookieSession = require('cookie-session');
+var queries = require("../../queries2");
 var Promise = require('bluebird');
 var passport = require('passport');
+var knex = require('../../db/knex');
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 if ( !process.env.NODE_ENV ) { require('dotenv').config();}
 
@@ -60,24 +62,31 @@ passport.use(new GoogleStrategy({
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log("prof", profile);
-    process.nextTick(function() {
-      console.log(profile);
-      return done(null, {
-        fname: profile.name.givenName,
-        lname: profile.name.familyName,
-        google_id: profile.id,
-        email: profile.email});
-      });
+    knex('users')
+      .where('email', profile.email)
+      .orWhere('google_id', profile.id).then(function(user) {
+      if(user.length) {
+        return done(null, user[0]);
+      } else {
+        var newUser = {
+          google_id: profile.google_id,
+          email: profile.email,
+          fname: profile.name.givenName,
+          lname: profile.name.familyName
+        }
+        queries.registerUserGoogle(newUser).then(function (userAdded) {
+          //console.log('----- user:', req.user);
+          //console.log("user id yo: " + id);
+          return done(null, userAdded[0]);
+        });
+      }
+    });
+
     }));
 
 
 passport.serializeUser(function(user, done) {
-  //later this will be where you selectively send to the browser
-  // an identifier for your user, like their primary key from the
-  // database, or their ID from linkedin
-
-  done(null, user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(user, done) {
