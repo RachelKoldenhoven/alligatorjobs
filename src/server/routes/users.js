@@ -55,6 +55,11 @@ router.get('/:id/edit', function(req, res, next) {
 });
 
 router.put('/user/:id/edit-contact', function(req, res, next) {
+  // queries.Users()
+
+  //.then(function(message) {
+      //res.json(message: "sdlkjdslkj")
+    //})
 });
 
 router.put('/user/:id/edit-address', function(req, res, next) {
