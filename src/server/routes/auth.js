@@ -15,10 +15,11 @@ passport.use(new LocalStrategy({
     usernameField: 'email'
   }, function(email, password, done) {
     // does the email exist?
-    knex('users').where('email', email)
+    queries.getUserByEmail(email)
       .then(function(data) {
         // email does not exist. return error.
         if (!data.length) {
+          console.log('wrong email');
           return done('Incorrect email.');
         }
         var user = data[0];
@@ -28,11 +29,13 @@ passport.use(new LocalStrategy({
           return done(null, user);
         } else {
           // passwords don't match! return error
+          console.log('wrong pw');
           return done('Incorrect password.');
         }
       })
       .catch(function(err) {
         // issue with SQL/nex query
+        console.log('hitting catch for login route');
         return done('Incorrect email and/or password.');
       });
   }
@@ -69,8 +72,9 @@ router.get( '/google/callback',
   }), function(req, res, next) {
     //console.log('---------- register user ----------');
     //console.log(req.user);
-    queries.registerUser(req.user).then(function() {
+    queries.registerUser(req.user).then(function(id) {
       //console.log('----- user:', req.user);
+      console.log(id);
       res.redirect('/');
     }).catch(function() {
       //console.log('----- err:', req.user);

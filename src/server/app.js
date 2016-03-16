@@ -62,10 +62,9 @@ passport.use(new GoogleStrategy({
     process.nextTick(function() {
       console.log(profile);
       return done(null, {
-        id: profile.id,
         fname: profile.name.givenName,
         lname: profile.name.familyName,
-        google_id: profile.google_id,
+        google_id: profile.id,
         email: profile.email});
       });
     }));
@@ -126,9 +125,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(3001, function() {
-  console.log('Express app listening on port 3001');
-});
+
+//app.listen(3001, function() {
+//  console.log('Express app listening on port 3001');
+//});
 
 
 module.exports = app;
