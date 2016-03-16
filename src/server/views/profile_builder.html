@@ -6,88 +6,156 @@
         <a href="/user/{{user.id}}"><button class="btn btn-primary">View My Profile</button></a>
         <p>Be sure your work is saved!</p>
     </div>
+    <h1>Profile Builder</h1><hr>
     <div class="row">
         <div class="col-lg-6">
-            <form class="form-horizontal" action="post" method="/user/:id/user">
+            <form class="form-horizontal" action="post" method="/user/{{user.id}}/edit-user">
                 <fieldset>
-                    <legend>Profile Builder</legend>
+                    <h3>Contact Information</h3><hr>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="fname">First name</label>
-                        <div class="col-md-4">
-                            <input id="fname" name="fname" type="text" placeholder="" class="form-control input-md" required="">
-                        </div>
+                        <label class="control-label" for="fname">First name</label>
+                        <input id="fname" name="fname" type="text" placeholder="" class="form-control" required="" value="{{userData.fname}}">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="lname">Last name</label>
-                        <div class="col-md-4">
-                            <input id="lname" name="lname" type="text" placeholder="" class="form-control input-md" required="">
-                        </div>
+                        <label class="control-label" for="lname">Last name</label>
+                        <input id="lname" name="lname" type="text" placeholder="" class="form-control" required="" value="{{userData.lname}}">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">Email</label>
-                        <div class="col-md-4">
-                            <input id="email" name="email" type="text" placeholder="jane@example.com" class="form-control input-md" required="">
-                        </div>
+                        <label class="control-label" for="email">Email</label>
+                        <input id="email" name="email" type="text" placeholder="jane@example.com" class="form-control" required="" value="{{userData.email}}">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="phone">Phone number</label>
-                        <div class="col-md-4">
-                            <input id="phone" name="phone" type="text" placeholder="" class="form-control input-md">
-                        </div>
+                        <label class="control-label" for="phone">Phone number</label>
+                        <input id="phone" name="phone" type="text" placeholder="" class="form-control" value="{{userData.phone}}">
                     </div>
                     <div class="form-group">
-                        <div class="col-md-4">
-                            <input type="submit" value="Update Contact Info" class="btn btn-primary">
-                        </div>
+                        <input type="submit" value="Update Contact Info" class="btn btn-primary">
                     </div>
                 </fieldset>
             </form>
         </div>
         <div class="col-lg-6">
-            <form class="form-horizontal" action="post" method="/user/:id/address">
+            <form class="form-horizontal" action="post" method="/user/{{user.id}}/edit-address">
                 <fieldset>
+                    <h3>Address Information</h3><hr>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="line_1">Address</label>
-                        <div class="col-md-4">
-                            <input id="line_1" name="line_1" type="text" class="form-control input-md">
-                        </div>
+                        <label class="control-label" for="line_1">Address</label>
+                        <input id="line_1" name="line_1" type="text" class="form-control" value="{{userAddress.line_1}}">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="line_2">Address Line 2</label>
-                        <div class="col-md-4">
-                            <input id="line_2" name="line_2" type="text" placeholder="" class="form-control input-md">
-                        </div>
+                        <label class="control-label" for="line_2">Address Line 2</label>
+                        <input id="line_2" name="line_2" type="text" placeholder="" class="form-control" value="{{userAddress.line_2}}">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="city">City</label>
-                        <div class="col-md-4">
-                            <input id="city" name="city" type="text" class="form-control input-md">
-                        </div>
+                        <label class="control-label" for="city">City</label>
+                        <input id="city" name="city" type="text" class="form-control" value="{{userAddress.city}}">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="state">State</label>
-                        <div class="col-md-4">
-                            <select id="state" name="state" class="form-control">
-                                <option value="CO" disabled="">Colorado</option>
-                            </select>
-                        </div>
+                        <label class="control-label" for="state">State</label>
+                        <select id="state" name="state" class="form-control">
+                            <option value="CO" disabled="">Colorado</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="zip">ZIP</label>
-                        <div class="col-md-4">
-                            <input id="zip" name="zip" type="text" placeholder="" class="form-control input-md">
-                        </div>
+                        <label class="control-label" for="zip">ZIP</label>
+                        <input id="zip" name="zip" type="text" placeholder="" class="form-control" value="{{userAddress.zip}}">
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <input type="submit" value="Update Address" class="btn btn-primary">
-                        </div>
+                    <div class="form-group col-lg-4">
+                        <input type="submit" value="Update Address" class="btn btn-primary">
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
     <div class="row">
+        <h3>Skills</h3><hr>
+        <form class="form-inline" method="post" action="/user/{{user.id}}/edit-skills">
+            <fieldset>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="english">English Proficiency</label>
+                        <div class="col-lg-4">
+                            <select id="english" name="english" class="form-control">
+                            {% if userData %}
+                                <option value="{{userData.english}}">{{userData.english}}</option>
+                            {% endif %}
+                                <option value="None">None</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="skill_id">Skill</label>
+                        <div class="col-lg-4">
+                            <select id="skill_id" name="skill_id" class="form-control">
+                                <option value="{{skill.skill_id}}">{{skill.skill_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
+                        <div class="col-lg-4">
+                            <select id="level_id" name="level_id" class="form-control col-lg-4">
+                                <option value="{{level.level_id}}">{{level.level_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="skill_id">Skill</label>
+                        <div class="col-lg-4">
+                            <select id="skill_id" name="skill_id" class="form-control">
+                                <option value="{{skill.skill_id}}">{{skill.skill_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
+                        <div class="col-lg-4">
+                            <select id="level_id" name="level_id" class="form-control col-lg-4">
+                                <option value="{{level.level_id}}">{{level.level_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="skill_id">Skill</label>
+                        <div class="col-lg-4">
+                            <select id="skill_id" name="skill_id" class="form-control">
+                                <option value="{{skill.skill_id}}">{{skill.skill_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
+                        <div class="col-lg-4">
+                            <select id="level_id" name="level_id" class="form-control col-lg-4">
+                                <option value="{{level.level_id}}">{{level.level_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="form-group">
+                        <label class="col-lg-2 control-label" for="level_id">Additional Skill Description</label>
+                        <textarea name="other_skills" placeholder="Write about skills and experience here" class="form-control col-lg-4">
+                            {{userData.other_skills}}
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <input type="submit" value="Update Skills" class="btn btn-primary">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
 
     </div>
 </div>
