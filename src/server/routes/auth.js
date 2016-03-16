@@ -69,8 +69,9 @@ router.get( '/google/callback',
   }), function(req, res, next) {
     //console.log('---------- register user ----------');
     //console.log(req.user);
-    queries.registerUser(req.user).then(function() {
+    queries.registerUser(req.user).then(function(id) {
       //console.log('----- user:', req.user);
+      console.log(id);
       res.redirect('/');
     }).catch(function() {
       //console.log('----- err:', req.user);
