@@ -9,7 +9,7 @@ var queries = require("../../../queries2");
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Alligator Jobs', user: req.user? req.user.fname: ""  });
 });
 
 module.exports = router;

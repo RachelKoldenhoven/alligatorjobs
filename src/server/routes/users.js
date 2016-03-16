@@ -30,19 +30,19 @@ router.get('/user/:id/', function(req, res, next) {
 
 
 router.get('/user/:id/create', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Alligator Job',  user: req.user? req.user.fname: "" });
 });
 
 router.get('/user/:id/edit', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Alligator Job', user: req.user? req.user.fname: ""  });
 });
 
 router.post('/user/:id/credit', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Alligator Job', user: req.user? req.user.fname: ""  });
 });
 
 router.post('/user/:id/edit', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Alligator Job', user: req.user? req.user.fname: ""  });
 });
 
 
