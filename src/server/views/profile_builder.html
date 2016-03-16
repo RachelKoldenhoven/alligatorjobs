@@ -11,7 +11,7 @@
     <h1>Profile Builder</h1><hr>
     <div class="row">
         <div class="col-lg-6">
-            <form class="form-horizontal" action="/user/{{user.id}}/edit">
+            <form class="form-horizontal" action="/user/{{user}}/edit-contact">
                 <fieldset>
                     <h3>Contact Information</h3><hr>
                     <div class="form-group">
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <form class="form-horizontal" action="post" method="/user/{{user.id}}/edit-address">
+            <form class="form-horizontal" action="post" method="/user/{{user}}/edit-address">
                 <fieldset>
                     <h3>Address Information</h3><hr>
                     <div class="form-group">
@@ -74,7 +74,7 @@
     </div>
     <div class="row">
         <h3>Skills</h3><hr>
-        <form class="form-inline" method="post" action="/user/{{user.id}}/edit-skills">
+        <form class="form-inline" method="post" action="/user/{{user}}/edit-skills">
             <fieldset>
                 <div class="row">
                     <div class="form-group col-md-4">
