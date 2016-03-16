@@ -12,7 +12,6 @@ var queries = require("../../../queries2");
 //Get Single User Profile
 router.get('/:id', function(req, res, next) {
     var userID = req.params.id;
-    console.log("Hey!", userID);
     queries.getUser(userID)
       .then(function(userData) {
         queries.getUserAddress(userID)
@@ -20,32 +19,35 @@ router.get('/:id', function(req, res, next) {
             userData.address = addressData;
           queries.getUserWorkExp(userID)
             .then(function(workExpData){
-              userData.workExp = JSON.stringify(workExpData.rows);
-                console.log(userData);
+              workExpData = workExpData.rows;
                 res.render('user', {
                   title: 'User Profile',
                   user: req.user,
                   userData: userData[0],
                   userAddress: userData.address[0],
-                  userSkills: userData.workExp
+                  userSkills: workExpData
                 })
             });
         });
     });
 });
 
-
 router.get('/:id/edit', function(req, res, next) {
-  res.render('index', { title: 'Alligator Job', user: req.user? req.user.fname: ""  });
+  res.render('profile_builder', {
+    title: 'Alligator Jobs',
+    user: req.user
+  });
 });
 
-router.put('/user/:id/credit', function(req, res, next) {
-  res.render('index', { title: 'Alligator Job', user: req.user? req.user.fname: ""  });
+router.put('/user/:id/edit-contact', function(req, res, next) {
 });
 
-router.post('/user/:id/edit', function(req, res, next) {
-  res.render('index', { title: 'Alligator Job', user: req.user? req.user.fname: ""  });
+router.put('/user/:id/edit-address', function(req, res, next) {
 });
+
+router.put('/user/:id/edit-skills', function(req, res, next) {
+});
+
 
 
 module.exports = router;
