@@ -42,6 +42,15 @@ module.exports = {
         return knex('resources').where('culture_id', culture_id);
     },
 
+    registerUserGoogle: function(newUser) {
+        return knex.insert({
+            google_id: newUser.google_id,
+            email: newUser.email,
+            fname: newUser.fname,
+            lname: newUser.lname
+        }).table('users').returning('*');
+    },
+
     registerUser: function(newUser) {
         return knex.insert({
             google_id: newUser.google_id,
