@@ -1,3 +1,11 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
 .logo {
     position: absolute;
     top: 0;
@@ -12,4 +20,21 @@
 
 a {
   color: #00B7FF;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.box {
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 30px;
+    text-align: center;
+}
+
+.pop {
+    color: #A63446;
 }
