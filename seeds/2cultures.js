@@ -8,8 +8,8 @@ exports.seed = function(knex, Promise) {
     knex('cultures').insert({
         name: 'Somali',
         why: 'Civil war began in Somalia in 1990 and led to the disintegration of the government.  The violence and anarchy led to more than 1 million Somalis to flee.  More than 1 million people are internally displaced as well.',
-        header_img: '/image/somaila.png',
-        phrases_link: '/image/somaila_phrases.png',
+        header_img: '/image/somalia.png',
+        phrases_link: '/image/somalia_phrases.png',
         foods: 'Canjeero bread, Sambusa (fried pastry with savory filling)',
         co_num: 400,
         us_num: 9011
