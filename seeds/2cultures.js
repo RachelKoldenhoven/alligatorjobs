@@ -8,8 +8,8 @@ exports.seed = function(knex, Promise) {
     knex('cultures').insert({
         name: 'Somali',
         why: 'Civil war began in Somalia in 1990 and led to the disintegration of the government.  The violence and anarchy led to more than 1 million Somalis to flee.  More than 1 million people are internally displaced as well.',
-        header_img: '/image/somalia.png',
-        phrases_link: '/image/somalia_phrases.png',
+        header_img: '/image/Somalia.png',
+        phrases_link: '/image/Somalia_phrases.png',
         foods: 'Canjeero bread, Sambusa (fried pastry with savory filling)',
         co_num: 400,
         us_num: 9011
@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
         name: 'Burmese',
         why: 'A military coup in 1962 led to the persecution of certain ethnic groups in Burma/Myanmar.  Refugees from Myanmar include the Karen and Rohingya groups who left Myanmar and were detained in camps in Thailand.',
         header_img: '/image/burma.png',
-        phrases_link: '/image/burma_phrases.png',
+        phrases_link: '/image/burma_phases.png',
         foods: 'Nya u (fermented fish), Rice with vegetables, Dohpira (steamed rice cake)',
         co_num: 445,
         us_num: 14577
