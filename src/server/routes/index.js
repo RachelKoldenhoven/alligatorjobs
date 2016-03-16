@@ -3,17 +3,75 @@ var router = express.Router();
 var pg = require('pg');
 var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
+var helpers = require('../lib/helpers');
+var passport = require('passport');
+
+
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Alligator Jobs', user: req.user? req.user.fname: "" });
 });
 
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+router.get('/register', helpers.loginRedirect, function(req, res, next) {
+  res.render('register', { title: 'Alligator Jobs', user: req.user});
 });
 
-router.get('/login', function(req, res, next) {
+router.post('/register', function(req, res, next) {
+  console.log (req.body);
+  var fname = req.body.fname;
+  var lname = req.body.lname;
+  var email = req.body.email;
+  var password = req.body.password;
+  // check if email is unique
+  queries.getUserByEmail(email)
+    .then(function(data){
+      console.log('data: ' + data);
+      // if email is in the database send an error
+      if(data.length) {
+        console.log('email taken');
+        return res.redirect('/register');
+      } else {
+        // hash and salt the password
+        var hashedPassword = helpers.hashing(password);
+        // if email is not in the database insert it
+        queries.registerUser({fname: fname, lname: lname, password: hashedPassword, email:email})
+          .then(function(data) {
+            console.log('successfully added user' + data);
+            req.flash('message', {
+              status: 'success',
+              message: 'Welcome!'
+            });
+            return res.redirect('/login');
+          })
+          .catch(function(err) {
+            return res.send('crap');
+          });
+      }
+    })
+    .catch(function(err){
+      return next(err);
+    });
+});
+
+router.get('/login', helpers.loginRedirect, function(req, res, next) {
   res.render('login', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+});
+
+router.post('/login', function(req, res, next) {
+  console.log(req.body);
+  passport.authenticate('local', function(err, user) {
+    if (err) {
+      return next(err);
+    } else {
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          return res.redirect('/');
+        }
+      });
+    }
+  })(req, res, next);
 });
 
 router.get('/cultures', function(req, res, next) {

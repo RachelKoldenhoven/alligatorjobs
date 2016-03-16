@@ -18,6 +18,10 @@ module.exports = {
         return Users().where('id', id);
     },
 
+    getUserByEmail: function (email) {
+        return Users().where('email', email);
+    },
+
 
     getUserAddress: function(id) {
         return knex('addresses').where('user_id', id);
@@ -43,7 +47,8 @@ module.exports = {
             google_id: newUser.google_id,
             email: newUser.email,
             fname: newUser.fname,
-            lname: newUser.lname
+            lname: newUser.lname,
+            password: newUser.password
         }).table('users').returning('id');
     },
 
