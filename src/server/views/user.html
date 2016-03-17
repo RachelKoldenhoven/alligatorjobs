@@ -18,23 +18,27 @@
             <h6>{{userAddress.city}}, {{userAddress.state}} {{userAddress.zip}}</h6>
             <br>
             <h3>Skills</h3><hr>
-            {% for skill in userSkills %}
-                <div class="col-lg-4 skillChunk">
-                    <div class="panel panel-success">
-                        <div class="panel-body">
-                            <h4>{{skill.skills_name}}</h4>
-                            <p>{{skill.levels_name}}</p>
+            <div class="row">
+                {% for skill in userSkills %}
+                    <div class="col-lg-4 skillChunk">
+                        <div class="panel panel-success">
+                            <div class="panel-body">
+                                <h4>{{skill.skills_name}}</h4>
+                                <p>{{skill.levels_name}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
             {% if userData.other_skills %}
+                <div class="row">
                     <div class="panel panel-success">
                         <div class="panel-body">
                             <h4>Other Skills and Skill Description</h4>
                             <p>{{userData.other_skills}}</p>
                         </div>
                     </div>
+                </div>
             {% endif %}
         </div>
     </div>
