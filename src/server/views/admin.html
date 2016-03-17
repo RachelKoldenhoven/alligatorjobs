@@ -5,12 +5,12 @@
 
 {% block content %}
 <div class="container-fluid">
-    Admin Dashboard
+
 </div>
 
 <div class="container">
-  <h2>Striped Rows</h2>
-  <p>The .table-striped class adds zebra-stripes to a table:</p>
+  <h2>Admin Dashboard</h2>
+
   <table class="table table-striped table-bordered table-responsive table-hover">
     <thead>
       <tr>
@@ -20,6 +20,9 @@
         <!-- <th>Skills</th> -->
         <th>Email</th>
         <th>Phone</th>
+        <th>Select</th>
+        <th>Update</th>
+        <th>Status</th>
       </tr>
     </thead>
     <tbody>
@@ -31,11 +34,20 @@
         <td>{{user.english}}</td>
         <td>{{user.email}}</td>
         <td>{{user.phone}}</td>
+        <td><input type="radio" name="Select" value=null></td>
+        <td><a href="/user/{{user.id}}/edit">Edit</a></td>
+        <td>Available</td>
       </tr>
     {%endfor%}
 
+
+
     </tbody>
   </table>
+  <input type="submit" name="delete" value="Delete" class=".btn">
+  <input type="submit" name="hired" value="Hired" class=".btn">
+  <input type="submit" name="available" value="Available" class=".btn">
+  <input type="submit" name="blocked" value="Block" class=".btn">
 </div>
 
 
