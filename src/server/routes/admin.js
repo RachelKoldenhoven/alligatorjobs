@@ -9,15 +9,38 @@ var queries = require("../../../queries2");
 
 
 router.get('/', function(req, res, next) {
-  console.log(req.user);
-  queries.verifyAdmin(req.user).then(function(isAdmin) {
-    console.log(isAdmin);
-    if(isAdmin[0].admin) {
-      res.render('admin', { title: 'Alligator Jobs', user: req.user });
-    } else {
-      res.redirect('/');
-    }
-    });
+    console.log("slkdjfslkdjflsdkjf", req.user);
+    if(!req.user) {
+   res.redirect('/');
+ }
+ queries.getUser(req.user).then(function(isAdmin) {
+   //console.log(isAdmin);
+   if(!isAdmin[0].admin) {
+     res.redirect('/');
+   } else {
+    queries.getUser(req.user)
+       .then(function(adminData) {
+            queries.getUsers()
+            .then(function(usersData) {
+                res.render('admin', {
+                    title: 'Admin Dashboard',
+                    adminData: adminData[0],
+                    usersData: usersData
+                });
+            });
+       });
+   }
+   });
+
+
+
+
+
+
+
+
+
+
 });
 
 module.exports = router;
