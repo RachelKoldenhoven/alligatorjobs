@@ -102,25 +102,26 @@ router.post('/:id/edit-skills', function(req, res, next) {
   console.log('Server-side req.body is', skillsUpdate);
   var skillsOnly = skillsUpdate.skills;
   console.log('skills only', skillsOnly);
-//am working on user.id 1, when gets here, tries to get info for user.id 4(the one i'm signed in as)
-//should just go login as Dan
-  queries.getUserSkills(userID)
-  .then(function(userSkills) {
-    if (userSkills.length) {
-      for (var i = 0; i < skillsOnly.length; i++) {
-        for (var j = 0; j < userSkills.length; i++) {
-          if (userSkills[j].name === skillsOnly[i].name) {
-            //update it
-            console.log('yes');
-          } else {
-            //add it
-          }
-        }
+  //can add a catch to this later, but should never break
+  queries.getUserSkills(userID).del()
+  .then(function() {
+    skillsOnly.forEach(function(el) {
+      var newSkillObj = {}
+      if (el.skill_id || el.level_id) {
+        console.log('EL.SKILL_ID IS', el.skill_id);
+        newSkillObj = {
+          skill_id: parseInt(el.skill_id),
+          level_id: parseInt(el.level_id)
+        };
+        console.log("NEW SKILL OBJECT IS", newSkillObj);
+        queries.addNewSkill(userID, newSkillObj)
+        .then(function() {
+        })
+        .catch(function(err) {
+          console.log("err is ", err);
+        })
       }
-//update
-    } else {
-//add all skills, use for loop on skillsOnly.length
-    }
+    })
   })
   .then(function(){
     queries.addOtherSkill(userID, skillsUpdate)
