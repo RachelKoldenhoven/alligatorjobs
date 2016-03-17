@@ -12,6 +12,13 @@
         <hr>
         <h4>OR</h4>
         <hr>
+        <div class="container">
+            {% if message.length %}
+            <div class="alert alert-{{message[0].status}}" role="alert">
+                <p>{{ message[0].message }}</p>
+            </div>
+            {% endif %}
+        </div>
         <form class="form-horizontal" method="post" action="/register">
             <fieldset>
                 <legend>Register</legend>

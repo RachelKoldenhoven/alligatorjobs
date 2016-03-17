@@ -10,12 +10,15 @@ var queries = require("../../../queries2");
 
 router.get('/', function(req, res, next) {
   console.log(req.user);
+  if(!req.user) {
+    res.redirect('/');
+  }
   queries.verifyAdmin(req.user).then(function(isAdmin) {
     console.log(isAdmin);
-    if(isAdmin[0].admin) {
-      res.render('admin', { title: 'Alligator Jobs', user: req.user });
-    } else {
+    if(!isAdmin[0].admin) {
       res.redirect('/');
+    } else {
+      res.render('admin', { title: 'Alligator Jobs', user: req.user });
     }
     });
 });
