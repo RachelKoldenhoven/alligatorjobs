@@ -17,7 +17,7 @@
         <th>First Name</th>
         <th>Last name</th>
         <th>English Proficiency</th>
-        <th>Skills</th>
+        <!-- <th>Skills</th> -->
         <th>Email</th>
         <th>Phone</th>
       </tr>
@@ -28,19 +28,12 @@
 
         <td>{{user.fname}}</td>
         <td>{{user.lname}}</td>
+        <td>{{user.english}}</td>
         <td>{{user.email}}</td>
+        <td>{{user.phone}}</td>
       </tr>
     {%endfor%}
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
+
     </tbody>
   </table>
 </div>

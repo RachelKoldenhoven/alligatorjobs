@@ -9,6 +9,7 @@ exports.seed = function(knex, Promise) {
         fname: 'Dan',
         lname: 'Klein',
         phone: '8888888888',
+        english: 'Advanced',
         email: 'danhirschklein@gmail.com',
         password: 'test',
         admin: true
@@ -17,6 +18,7 @@ exports.seed = function(knex, Promise) {
         fname: 'Rachel',
         lname: 'Koldenhoven',
         email: 'rachel@koldenfrozen.com',
+        english: 'Intermediate',
         password: 'password',
         admin: true
     }),
@@ -24,6 +26,7 @@ exports.seed = function(knex, Promise) {
         fname: 'Valerie',
         lname: 'Kraucunas',
         email: 'valeriekraucunas@gmail.com',
+        english: 'None',
         password: 'password',
         admin: true
     })
