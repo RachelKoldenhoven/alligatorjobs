@@ -132,5 +132,9 @@ module.exports = {
 
     verifyAdmin: function(userId) {
         return knex.column('admin').select().from('users').where('id', userId);
+    },
+
+    verifyAdmin2: function(userId) {
+        return Users().column('admin').where('id', userId);
     }
 };
