@@ -74,12 +74,20 @@ module.exports = {
 
     },
 
-    addNewSkill: function (user_id, skill_id, level_id) {
+    addNewSkill: function (user_id, skillObj) {
         return knex('work_exp')
         .insert({
             user_id: user_id,
-            skill_id: skill_id,
-            level_id: level_id
+            skill_id: skillObj.skill_id,
+            level_id: skillObj.level_id
+        });
+    },
+
+    updateSkill: function (user_id, skillObj) {
+        return knex('work_exp').where('user_id', user_id)
+        .update({
+            skill_id: skillObj.skill_id,
+            level_id: skillObj.level_id
         });
     },
 
@@ -92,27 +100,27 @@ module.exports = {
         .where('id', id);
     },
 
-    addAddress: function (user_id, line_1, line_2, city, state, zip) {
+    addAddress: function (user_id, addressObj) {
         return knex('addresses')
         .insert({
             user_id: user_id,
-            line_1: line_1,
-            line_2: line_2,
-            city: city,
-            state: state,
-            zip: zip
+            line_1: addressObj.line_1,
+            line_2: addressObj.line_2,
+            city: addressObj.city,
+            state: addressObj.state,
+            zip: addressObj.zip
         });
 
     },
 
-     updateAddress: function (user_id, line_1, line_2, city, state, zip) {
+    updateAddress: function (user_id, addressObj) {
         return knex('addresses')
         .update({
-            line_1: line_1,
-            line_2: line_2,
-            city: city,
-            state: state,
-            zip: zip
+            line_1: addressObj.line_1,
+            line_2: addressObj.line_2,
+            city: addressObj.city,
+            state: addressObj.state,
+            zip: addressObj.zip
         })
         .where('user_id', user_id);
 
