@@ -102,9 +102,40 @@ router.post('/:id/edit-skills', function(req, res, next) {
   console.log('Server-side req.body is', skillsUpdate);
   var skillsOnly = skillsUpdate.skills;
   console.log('skills only', skillsOnly);
-  for (var i = 0; i < skillsOnly.length; i++ ) {
+//am working on user.id 1, when gets here, tries to get info for user.id 4(the one i'm signed in as)
+//should just go login as Dan
+  queries.getUserSkills(userID)
+  .then(function(userSkills) {
+    if (userSkills.length) {
+      for (var i = 0; i < skillsOnly.length; i++) {
+        for (var j = 0; j < userSkills.length; i++) {
+          if (userSkills[j].name === skillsOnly[i].name) {
+            //update it
+            console.log('yes');
+          } else {
+            //add it
+          }
+        }
+      }
+//update
+    } else {
+//add all skills, use for loop on skillsOnly.length
+    }
+  })
+  .then(function(){
+    queries.addOtherSkill(userID, skillsUpdate)
+    .then(function() {
+      res.json({message: 'Skills information updated.'})
+    })
+    .catch(function(err) {
+      res.json({message: 'Something went wrong inserting your information.'})
+    })
+  })
+  .catch(function(err) {
+      console.log(err);
+      res.json('something is genuinely messed up.');
+    });
 
-  }
 });
 
 
