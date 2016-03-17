@@ -16,6 +16,7 @@ router.get('/:id', function(req, res, next) {
     if (!(req.user !== userID || isAdmin[0].admin)) {
       res.redirect('/');
     } else {
+      var isAdmin = true;
       queries.getUser(userID)
         .then(function (userData) {
           queries.getUserAddress(userID)
@@ -29,7 +30,8 @@ router.get('/:id', function(req, res, next) {
                     user: req.user,
                     userData: userData[0],
                     userAddress: userData.address[0],
-                    userSkills: workExpData
+                    userSkills: workExpData,
+                    isAdmin: isAdmin
                   })
                 });
             });
