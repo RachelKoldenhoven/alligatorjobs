@@ -11,7 +11,11 @@
     <h1>Profile Builder</h1><hr>
     <div class="row">
         <div class="col-lg-6">
-            <form class="form-horizontal" id="contactForm" action="/user/{{user}}/edit-contact">
+            {% if isAdmin %}
+                <form class="form-horizontal" id="contactForm" action="/user/{{userData.id}}/edit-contact">
+            {% else %}
+                <form class="form-horizontal" id="contactForm" action="/user/{{user}}/edit-contact">
+            {% endif %}
                 <fieldset>
                     <h3>Contact Information</h3><hr>
                     <div class="form-group">
@@ -38,7 +42,11 @@
             <div class="message" id="contactMessage"></div>
         </div>
         <div class="col-lg-6">
-            <form class="form-horizontal" id="addressForm" action="/user/{{user}}/edit-address">
+            {% if isAdmin %}
+                <form class="form-horizontal" id="addressForm" action="/user/{{userData.id}}/edit-address">
+            {% else %}
+                <form class="form-horizontal" id="addressForm" action="/user/{{user}}/edit-address">
+            {% endif %}
                 <fieldset>
                     <h3>Address Information</h3><hr>
                     <div class="form-group">
@@ -71,42 +79,13 @@
             <div class="message" id="addressMessage"></div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="row">
         <h3>Skills</h3><hr>
-        <form class="form-inline" id="skillsForm" action="/user/{{user}}/edit-skills">
+        {% if isAdmin %}
+            <form class="form-inline" id="skillsForm" action="/user/{{userData.id}}/edit-skills">
+        {% else %}
+            <form class="form-inline" id="skillsForm" action="/user/{{user}}/edit-skills">
+        {% endif %}
             <fieldset>
                 <div class="row">
                     <div class="form-group col-md-4">
