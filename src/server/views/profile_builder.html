@@ -11,7 +11,7 @@
     <h1>Profile Builder</h1><hr>
     <div class="row">
         <div class="col-lg-6">
-            <form class="form-horizontal" action="/user/{{user}}/edit-contact">
+            <form class="form-horizontal" id="contactForm" action="/user/{{user}}/edit-contact">
                 <fieldset>
                     <h3>Contact Information</h3><hr>
                     <div class="form-group">
@@ -38,7 +38,7 @@
             <div class="message" id="contactMessage"></div>
         </div>
         <div class="col-lg-6">
-            <form class="form-horizontal" action="post" method="/user/{{user}}/edit-address">
+            <form class="form-horizontal" id="addressForm" action="post" method="/user/{{user}}/edit-address">
                 <fieldset>
                     <h3>Address Information</h3><hr>
                     <div class="form-group">
@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label class="control-label" for="state">State</label>
                         <select id="stateDropDown" name="state" class="form-control">
-                            <option value="CO" disabled="">Colorado</option>
+                            <option name="state" value="CO">Colorado</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -64,15 +64,16 @@
                         <input id="zip" name="zip" type="text" placeholder="" class="form-control" value="{{userAddress.zip}}">
                     </div>
                     <div class="form-group col-lg-4">
-                        <input type="submit" value="Update Address" class="btn btn-primary">
+                        <input type="submit" id="addressSubmit" value="Update Address" class="btn btn-primary">
                     </div>
                 </fieldset>
             </form>
+            <div class="message" id="addressMessage"></div>
         </div>
     </div>
     <div class="row">
         <h3>Skills</h3><hr>
-        <form class="form-inline" method="post" action="/user/{{user}}/edit-skills">
+        <form class="form-inline" id="skillsForm" action="/user/{{user}}/edit-skills">
             <fieldset>
                 <div class="row">
                     <div class="form-group col-md-4">

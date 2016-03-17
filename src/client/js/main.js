@@ -56,7 +56,7 @@ $(document).on('ready', function() {
                    WY: 'Wyoming'};
 
     for (var i in states) {
-        $("#stateDropDown").append('<option value='+i+'>'+states[i]+'</option>');
+        $("#stateDropDown").append('<option name="state" value='+i+'>'+states[i]+'</option>');
     }
 });
 
@@ -64,14 +64,14 @@ $(document).on('ready', function() {
 $('#contactSubmit').on('click', function(event) {
     event.preventDefault();
     var phone = $('#phone').val();
-    phone = phone.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/\s/g, '');
+    phone = phone.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/\s/g, '').replace(/\D+/g, '');
     var dataObject = {
             fname: $('#fname').val(),
             lname: $('#lname').val(),
             email: $('#email').val(),
             phone: phone
         };
-    var url = $('form').first().attr('action');
+    var url = $('contactForm').attr('action');
 
     $.ajax({
         url: url,
@@ -80,6 +80,30 @@ $('#contactSubmit').on('click', function(event) {
         datatype: 'json',
         success: function(response) {
         $('#contactMessage').html('<p>'+response.message+'</p>');
+            }
+    });
+});
+
+$('#addressSubmit').on('click', function(event) {
+    event.preventDefault();
+    var zip = $('#zip').val()
+    zip = zip.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/\s/g, '').replace(/\D+/g, '').slice(0, 5);
+    var dataObject = {
+        line_1: $('#line_1').val(),
+        line_2: $('#line_2').val(),
+        city: $('#city').val(),
+        state: $('#stateDropDown option:selected').val(),
+        zip: zip
+    }
+    var url = $('addressForm').attr('action');
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: dataObject,
+        datatype: 'json',
+        success: function(response) {
+        $('#addressMessage').html('<p>'+response.message+'</p>');
             }
     });
 });

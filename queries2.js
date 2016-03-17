@@ -92,27 +92,27 @@ module.exports = {
         .where('id', id);
     },
 
-    addAddress: function (user_id, line_1, line_2, city, state, zip) {
+    addAddress: function (user_id, addressObj) {
         return knex('addresses')
         .insert({
             user_id: user_id,
-            line_1: line_1,
-            line_2: line_2,
-            city: city,
-            state: state,
-            zip: zip
+            line_1: addressObj.line_1,
+            line_2: addressObj.line_2,
+            city: addressObj.city,
+            state: addressObj.state,
+            zip: addressObj.zip
         });
 
     },
 
-     updateAddress: function (user_id, line_1, line_2, city, state, zip) {
+    updateAddress: function (user_id, addressObj) {
         return knex('addresses')
         .update({
-            line_1: line_1,
-            line_2: line_2,
-            city: city,
-            state: state,
-            zip: zip
+            line_1: addressObj.line_1,
+            line_2: addressObj.line_2,
+            city: addressObj.city,
+            state: addressObj.state,
+            zip: addressObj.zip
         })
         .where('user_id', user_id);
 

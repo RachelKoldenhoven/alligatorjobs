@@ -56,8 +56,6 @@ router.get('/:id/edit', function(req, res, next) {
 
 router.put('/:id/edit-contact', function(req, res, next) {
   var userUpdate = req.body;
-  console.log('Server-side req.body is', userUpdate);
-  console.log('The update object', userUpdate);
   queries.getUser(req.params.id).update({'fname': userUpdate.fname, 'lname': userUpdate.lname, 'email': userUpdate.email, 'phone':userUpdate.phone})
     .then(function() {
       res.json({message: 'Contact information updated.'});
@@ -67,7 +65,24 @@ router.put('/:id/edit-contact', function(req, res, next) {
     });
 });
 
-router.put('/:id/edit-address', function(req, res, next) {
+router.post('/:id/edit-address', function(req, res, next) {
+  var userID = req.params.id;
+  var addressUpdate = req.body;
+  console.log('Server-side req.body is', addressUpdate);
+  queries.getUserAddress(userID)
+  .then(function() {
+    queries.getUserAddress(userID).update({line_1: addressUpdate.line_1, line_2: addressUpdate.line_2, city: addressUpdate.city, state: addressUpdate.state, zip: addressUpdate.zip})
+    .then(function() {
+      res.json({message: 'Address information updated.'});
+    })
+    .catch(function() {
+      res.json({message: 'Something went wrong updating your address.'})
+      done();
+    })
+  })
+  .catch(function() {
+    queries.
+  })
 });
 
 router.put('/:id/edit-skills', function(req, res, next) {
