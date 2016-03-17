@@ -96,7 +96,15 @@ router.post('/:id/edit-address', function(req, res, next) {
   })
 });
 
-router.put('/:id/edit-skills', function(req, res, next) {
+router.post('/:id/edit-skills', function(req, res, next) {
+  var userID = req.params.id;
+  var skillsUpdate = JSON.parse(req.body.data);
+  console.log('Server-side req.body is', skillsUpdate);
+  var skillsOnly = skillsUpdate.skills;
+  console.log('skills only', skillsOnly);
+  for (var i = 0; i < skillsOnly.length; i++ ) {
+
+  }
 });
 
 
