@@ -13,9 +13,9 @@
         <h4>OR</h4>
         <hr>
         <div class="container">
-            {% if message.length %}
-            <div class="alert alert-{{message[0].status}}" role="alert">
-                <p>{{ message[0].message }}</p>
+            {% if status %}
+            <div class="alert alert-{{ status }}" role="alert">
+                <h4>{{ message }}</h4>
             </div>
             {% endif %}
         </div>
@@ -43,7 +43,8 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="password">Password</label>
                     <div class="col-md-4">
-                        <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
+                        <input id="password" name="password" type="password" placeholder="" class="form-control input-md" pattern=".{6,}" required=""
+                        title="6 characters minimum">
                     </div>
                 </div>
                 <div class="form-group">

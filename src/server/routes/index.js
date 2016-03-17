@@ -28,8 +28,12 @@ router.post('/register', function(req, res, next) {
     .then(function(data){
       // if email is in the database send an error
       if(data.length) {
-        console.log('email taken');
-        return res.redirect('/register');
+          res.render('register',
+            { title: 'Alligator Jobs',
+              user: req.user,
+              status: 'warning',
+              message: 'Email already registered!'
+            });
       } else {
         // hash and salt the password
         var hashedPassword = helpers.hashing(password);
