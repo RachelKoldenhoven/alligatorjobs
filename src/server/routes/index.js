@@ -62,7 +62,7 @@ router.post('/register', function(req, res, next) {
 });
 
 router.get('/login', helpers.loginRedirect, function(req, res, next) {
-  res.render('login', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+  res.render('login', { title: 'Alligator Jobs', user: req.user });
 });
 
 router.post('/login', function(req, res, next) {
@@ -83,7 +83,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/cultures', function(req, res, next) {
-  res.render('cultures', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+  res.render('cultures', { title: 'Alligator Jobs', user: req.user });
 });
 
 router.get('/cultures/:id', function(req, res, next) {
@@ -96,7 +96,7 @@ router.get('/cultures/:id', function(req, res, next) {
           console.log(cultureData);
           res.render('culture_profile', {
             title: 'Culture Page',
-            user: req.user? req.user.fname: "",
+            user: req.user,
             cultureData: cultureData[0],
             cultureResources: cultureData.resources
           });
@@ -105,7 +105,7 @@ router.get('/cultures/:id', function(req, res, next) {
 });
 
 router.get('/public/user/:id', function(req, res, next) {
-  res.render('user', { title: 'Alligator Job', user: req.user? req.user.fname: "" });
+  res.render('user', { title: 'Alligator Jobs', user: req.user? req.user.fname: "" });
 });
 
 module.exports = router;
