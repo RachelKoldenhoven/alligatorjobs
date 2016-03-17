@@ -173,5 +173,35 @@ router.post('/:id/edit-skills', function(req, res, next) {
 });
 
 
+// get a print-ready profile
+router.get('/:id/print', function(req, res, next) {
+  var userID = req.params.id;
+  queries.verifyAdmin(req.user).then(function(isAdmin) {
+    if (!(req.user !== userID || isAdmin[0].admin)) {
+      res.redirect('/');
+    } else {
+      queries.getUser(userID)
+        .then(function (userData) {
+          queries.getUserAddress(userID)
+            .then(function (addressData) {
+              userData.address = addressData;
+              queries.getUserWorkExp(userID)
+                .then(function (workExpData) {
+                  workExpData = workExpData.rows;
+                  res.render('print', {
+                    title: 'User Profile',
+                    user: req.user,
+                    userData: userData[0],
+                    userAddress: userData.address[0],
+                    userSkills: workExpData
+                  })
+                });
+            });
+        });
+    }
+  });
+});
+
+
 
 module.exports = router;
