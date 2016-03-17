@@ -71,7 +71,7 @@ $('#contactSubmit').on('click', function(event) {
             email: $('#email').val(),
             phone: phone
         };
-    var url = $('contactForm').attr('action');
+    var url = $('#contactForm').attr('action');
 
     $.ajax({
         url: url,
@@ -95,7 +95,7 @@ $('#addressSubmit').on('click', function(event) {
         state: $('#stateDropDown option:selected').val(),
         zip: zip
     }
-    var url = $('addressForm').attr('action');
+    var url = $('#addressForm').attr('action');
 
     $.ajax({
         url: url,

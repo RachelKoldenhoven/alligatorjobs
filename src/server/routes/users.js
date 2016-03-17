@@ -70,18 +70,28 @@ router.post('/:id/edit-address', function(req, res, next) {
   var addressUpdate = req.body;
   console.log('Server-side req.body is', addressUpdate);
   queries.getUserAddress(userID)
-  .then(function() {
-    queries.getUserAddress(userID).update({line_1: addressUpdate.line_1, line_2: addressUpdate.line_2, city: addressUpdate.city, state: addressUpdate.state, zip: addressUpdate.zip})
-    .then(function() {
-      res.json({message: 'Address information updated.'});
-    })
-    .catch(function() {
-      res.json({message: 'Something went wrong updating your address.'})
-      done();
-    })
+  .then(function(data) {
+    if (data.length) {
+      queries.updateAddress(userID, addressUpdate)
+      .then(function() {
+        res.json({message: 'Address information updated.'});
+      })
+      .catch(function() {
+        res.json({message: 'Something went wrong updating your address.'})
+      })
+    } else {
+      queries.addAddress(userID, addressUpdate)
+      .then(function() {
+        res.json({message: 'Address information added.'});
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.json({message: 'Something went wrong adding your address.'})
+      })
+    }
   })
   .catch(function() {
-    queries.
+    console.log('Something is genuinely fucked');
   })
 });
 
