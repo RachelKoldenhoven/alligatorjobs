@@ -42,12 +42,13 @@ router.get('/:id/edit', function(req, res, next) {
           queries.getUserWorkExp(userID)
             .then(function(workExpData){
               workExpData = workExpData.rows;
+              console.log(workExpData);
                 res.render('profile_builder', {
                   title: 'Profile Builder',
                   user: req.user,
                   userData: userData[0],
                   userAddress: userData.address[0],
-                  userSkills: workExpData
+                  workExperience: workExpData
                 })
             });
         });
@@ -91,7 +92,7 @@ router.post('/:id/edit-address', function(req, res, next) {
     }
   })
   .catch(function() {
-    console.log('Something is genuinely fucked');
+    console.log('Something is genuinely messed up.');
   })
 });
 
