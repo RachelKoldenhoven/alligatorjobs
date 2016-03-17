@@ -54,13 +54,48 @@ router.get('/:id/edit', function(req, res, next) {
     });
 });
 
-router.put('/user/:id/edit-contact', function(req, res, next) {
+router.put('/:id/edit-contact', function(req, res, next) {
+  var userUpdate = req.body;
+  queries.getUser(req.params.id).update({'fname': userUpdate.fname, 'lname': userUpdate.lname, 'email': userUpdate.email, 'phone':userUpdate.phone})
+    .then(function() {
+      res.json({message: 'Contact information updated.'});
+    })
+    .catch(function() {
+      res.json({message: 'Something went wrong.'});
+    });
 });
 
-router.put('/user/:id/edit-address', function(req, res, next) {
+router.post('/:id/edit-address', function(req, res, next) {
+  var userID = req.params.id;
+  var addressUpdate = req.body;
+  console.log('Server-side req.body is', addressUpdate);
+  queries.getUserAddress(userID)
+  .then(function(data) {
+    if (data.length) {
+      queries.updateAddress(userID, addressUpdate)
+      .then(function() {
+        res.json({message: 'Address information updated.'});
+      })
+      .catch(function() {
+        res.json({message: 'Something went wrong updating your address.'})
+      })
+    } else {
+      queries.addAddress(userID, addressUpdate)
+      .then(function() {
+        res.json({message: 'Address information added.'});
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.json({message: 'Something went wrong adding your address.'})
+      })
+    }
+  })
+  .catch(function() {
+    console.log('Something is genuinely fucked');
+  })
 });
 
-router.put('/user/:id/edit-skills', function(req, res, next) {
+router.put('/:id/edit-skills', function(req, res, next) {
 });
 
 

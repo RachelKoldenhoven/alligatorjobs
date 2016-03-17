@@ -24,12 +24,6 @@ function loginRedirect(req, res, next) {
 
 function hashing(password) {
   return bcrypt.hashSync(password, 10);
-  // Add promises!!!
-  // var newPassword;
-  // bcrypt.hash(password, 10, function(err, hash) {
-  //   newPassword = hash;
-  // });
-  // return newPassword;
 }
 
 function comparePassword(password, hashedPassword) {

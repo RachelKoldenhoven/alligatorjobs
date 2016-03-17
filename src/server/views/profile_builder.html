@@ -1,3 +1,5 @@
+
+
 {% extends 'layout.html' %}
 {% block title %}{% endblock %}
 {% block content %}
@@ -9,7 +11,7 @@
     <h1>Profile Builder</h1><hr>
     <div class="row">
         <div class="col-lg-6">
-            <form class="form-horizontal" action="post" method="/user/{{user.id}}/edit-user">
+            <form class="form-horizontal" id="contactForm" action="/user/{{user}}/edit-contact">
                 <fieldset>
                     <h3>Contact Information</h3><hr>
                     <div class="form-group">
@@ -29,13 +31,14 @@
                         <input id="phone" name="phone" type="text" placeholder="" class="form-control" value="{{userData.phone}}">
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Update Contact Info" class="btn btn-primary">
+                        <input id="contactSubmit" type="submit" value="Update Contact Info" class="btn btn-primary">
                     </div>
                 </fieldset>
             </form>
+            <div class="message" id="contactMessage"></div>
         </div>
         <div class="col-lg-6">
-            <form class="form-horizontal" action="post" method="/user/{{user.id}}/edit-address">
+            <form class="form-horizontal" id="addressForm" action="/user/{{user}}/edit-address">
                 <fieldset>
                     <h3>Address Information</h3><hr>
                     <div class="form-group">
@@ -52,8 +55,8 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="state">State</label>
-                        <select id="state" name="state" class="form-control">
-                            <option value="CO" disabled="">Colorado</option>
+                        <select id="stateDropDown" name="state" class="form-control">
+                            <option name="state" value="CO">Colorado</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -61,15 +64,16 @@
                         <input id="zip" name="zip" type="text" placeholder="" class="form-control" value="{{userAddress.zip}}">
                     </div>
                     <div class="form-group col-lg-4">
-                        <input type="submit" value="Update Address" class="btn btn-primary">
+                        <input type="submit" id="addressSubmit" value="Update Address" class="btn btn-primary">
                     </div>
                 </fieldset>
             </form>
+            <div class="message" id="addressMessage"></div>
         </div>
     </div>
     <div class="row">
         <h3>Skills</h3><hr>
-        <form class="form-inline" method="post" action="/user/{{user.id}}/edit-skills">
+        <form class="form-inline" id="skillsForm" action="/user/{{user}}/edit-skills">
             <fieldset>
                 <div class="row">
                     <div class="form-group col-md-4">
@@ -99,7 +103,25 @@
                     <div class="form-group col-md-4">
                         <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
                         <div class="col-lg-4">
-                            <select id="level_id" name="level_id" class="form-control col-lg-4">
+                            <select name="level_id" class="form-control col-lg-4">
+                                <option value="{{level.level_id}}">{{level.level_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row well">
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="skill_id">Skill</label>
+                        <div class="col-lg-4">
+                            <select id="skill_id" name="skill_id" class="form-control">
+                                <option value="{{skill.skill_id}}">{{skill.skill_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
+                        <div class="col-lg-4">
+                            <select name="level_id" class="form-control col-lg-4">
                                 <option value="{{level.level_id}}">{{level.level_name}}</option>
                             </select>
                         </div>
@@ -117,25 +139,7 @@
                     <div class="form-group col-md-4">
                         <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
                         <div class="col-lg-4">
-                            <select id="level_id" name="level_id" class="form-control col-lg-4">
-                                <option value="{{level.level_id}}">{{level.level_name}}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label class="col-lg-2 control-label" for="skill_id">Skill</label>
-                        <div class="col-lg-4">
-                            <select id="skill_id" name="skill_id" class="form-control">
-                                <option value="{{skill.skill_id}}">{{skill.skill_name}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label class="col-lg-2 control-label" for="level_id">Skill Level</label>
-                        <div class="col-lg-4">
-                            <select id="level_id" name="level_id" class="form-control col-lg-4">
+                            <select name="level_id" class="form-control col-lg-4">
                                 <option value="{{level.level_id}}">{{level.level_name}}</option>
                             </select>
                         </div>
@@ -144,9 +148,7 @@
                 <div class="row">
                      <div class="form-group">
                         <label class="col-lg-2 control-label" for="level_id">Additional Skill Description</label>
-                        <textarea name="other_skills" placeholder="Write about skills and experience here" class="form-control col-lg-4">
-                            {{userData.other_skills}}
-                        </textarea>
+                        <textarea name="other_skills" placeholder="Write about skills and experience here" class="form-control col-lg-4">{{userData.other_skills}}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -156,7 +158,6 @@
                 </div>
             </fieldset>
         </form>
-
     </div>
 </div>
 

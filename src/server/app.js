@@ -54,6 +54,19 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, '../client/image')));
 
+
+// *** protect user routes *** //
+
+app.use('/user', function (req, res, next) {
+  //console.log(req.user);
+  if(!req.user) {
+    //console.log('denied');
+    res.redirect('/login');
+  } else {
+    next();
+  }
+});
+
 // *** google auth *** //
 passport.use(new GoogleStrategy({
     clientID:     process.env.GOOGLE_CLIENT_ID,
