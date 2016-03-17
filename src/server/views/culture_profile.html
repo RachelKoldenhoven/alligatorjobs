@@ -5,27 +5,46 @@
 
 
 {% block content %}
-<div class="container-fluid">
-    <img src={{cultureData.header_img}} alt="Header Image for {{cultureData.name}} Culture Page">
-</div>
-<div class="container">
-    <div class="col-lg-8">
-    <p>{{cultureData.why}}</p>
-    <img src ={{cultureData.phrases_link}} alt="Useful {{cultureData.name}} phrases">
+    <div class="container-fluid">
+        <div class="row">
+            <img id="cultureHeaderImg" src={{cultureData.header_img}} alt="Header Image for {{cultureData.name}} Culture Page">
+        </div>
     </div>
-    <div class="col-lg-4">
-        <p>Foods</p>
-        <p>{{cultureData.foods}}</p><br>
-        <p>Helpful Resources!</p>
+    <div class="container">
+        <div class="row">
+            <h1 class="pop">{{cultureData.name}} Culture</h1>
+            <hr>
+        </div>
+    <!-- everything good above this point -->
 
-        {% for resource in cultureResources %}
-        <p><a href={{resource.website}}>{{resource.name}}</a></p>
-
-        {% endfor %}
-
-
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <h4><em>Why are these people displaced?</em></h4>
+                    <p>{{cultureData.why}}</p>
+                </div>
+                <div class="row">
+                    <h4><em>Common work phrases</em></h4>
+                    <img src ={{cultureData.phrases_link}} alt="Useful {{cultureData.name}} phrases">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="row">
+                    <h4><em>Foods</em></h4>
+                    <p>{{cultureData.foods}}</p>
+                </div>
+                <div class="row">
+                    <h4><em>Helpful resources</em></h4>
+                    <p>Contact these resource(s) for services such as translation and employee support</p>
+                    {% for resource in cultureResources %}
+                        <a href={{resource.website}}><p>{{resource.name}}</p></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+
 
 
 {% endblock %}
