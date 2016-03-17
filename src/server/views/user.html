@@ -9,13 +9,13 @@
             <div class="row well">
                 <a href="/user/{{userData.id}}/edit"><button class="btn btn-primary">Edit This Profile</button></a>
                 <a href="/public/user/{{userData.id}}"><button class="btn btn-info">View Public Version</button></a>
-                <a href="/user/{{userData.id}}/print"><button class="btn btn-warning">Print Profile</button></a>
+                <a href="/user/{{userData.id}}/print" target="_blank"><button class="btn btn-warning">Print Profile</button></a>
             </div>
         {% else %}
             <div class="row well">
                 <a href="/user/{{user}}/edit"><button class="btn btn-primary">Edit Profile</button></a>
                 <a href="/public/user/{{user}}"><button class="btn btn-info">View Public Profile</button></a>
-                <a href="/user/{{user}}/print"><button class="btn btn-warning">Print Profile</button></a>
+                <a href="/user/{{user}}/print" target="_blank"><button class="btn btn-warning">Print Profile</button></a>
             </div>
         {% endif %}
         <div class="row">
