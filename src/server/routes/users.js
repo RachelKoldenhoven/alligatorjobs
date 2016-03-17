@@ -42,12 +42,13 @@ router.get('/:id/edit', function(req, res, next) {
           queries.getUserWorkExp(userID)
             .then(function(workExpData){
               workExpData = workExpData.rows;
+              console.log(workExpData);
                 res.render('profile_builder', {
                   title: 'Profile Builder',
                   user: req.user,
                   userData: userData[0],
                   userAddress: userData.address[0],
-                  userSkills: workExpData
+                  workExperience: workExpData
                 })
             });
         });
@@ -91,11 +92,51 @@ router.post('/:id/edit-address', function(req, res, next) {
     }
   })
   .catch(function() {
-    console.log('Something is genuinely fucked');
+    console.log('Something is genuinely messed up.');
   })
 });
 
-router.put('/:id/edit-skills', function(req, res, next) {
+router.post('/:id/edit-skills', function(req, res, next) {
+  var userID = req.params.id;
+  var skillsUpdate = JSON.parse(req.body.data);
+  console.log('Server-side req.body is', skillsUpdate);
+  var skillsOnly = skillsUpdate.skills;
+  console.log('skills only', skillsOnly);
+  //can add a catch to this later, but should never break
+  queries.getUserSkills(userID).del()
+  .then(function() {
+    skillsOnly.forEach(function(el) {
+      var newSkillObj = {}
+      if (el.skill_id || el.level_id) {
+        console.log('EL.SKILL_ID IS', el.skill_id);
+        newSkillObj = {
+          skill_id: parseInt(el.skill_id),
+          level_id: parseInt(el.level_id)
+        };
+        console.log("NEW SKILL OBJECT IS", newSkillObj);
+        queries.addNewSkill(userID, newSkillObj)
+        .then(function() {
+        })
+        .catch(function(err) {
+          console.log("err is ", err);
+        })
+      }
+    })
+  })
+  .then(function(){
+    queries.addOtherSkill(userID, skillsUpdate)
+    .then(function() {
+      res.json({message: 'Skills information updated.'})
+    })
+    .catch(function(err) {
+      res.json({message: 'Something went wrong inserting your information.'})
+    })
+  })
+  .catch(function(err) {
+      console.log(err);
+      res.json('something is genuinely messed up.');
+    });
+
 });
 
 

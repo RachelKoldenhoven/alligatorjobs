@@ -73,6 +73,11 @@ module.exports = {
 
     },
 
+    getUserSkills: function (user_id) {
+        console.log(user_id);
+        return knex('work_exp').where('user_id', user_id);
+    },
+
     addNewSkill: function (user_id, skillObj) {
         return knex('work_exp')
         .insert({
@@ -90,11 +95,11 @@ module.exports = {
         });
     },
 
-    addOtherSkill: function (id, other_skills, english) {
+    addOtherSkill: function (id, skillObj) {
         return Users()
         .update({
-            english: english,
-            other_skills: other_skills
+            english: skillObj.english,
+            other_skills: skillObj.other_skills
         })
         .where('id', id);
     },

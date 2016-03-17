@@ -54,9 +54,61 @@ $(document).on('ready', function() {
                    WV: 'West Virginia',
                    WI: 'Wisconsin',
                    WY: 'Wyoming'};
-
     for (var i in states) {
         $("#stateDropDown").append('<option name="state" value='+i+'>'+states[i]+'</option>');
+    }
+
+    var skillsload = {1: 'Accounting',
+            2: 'Automotive',
+            3: 'Banking',
+            4: 'Business Development',
+            5: 'Child Care',
+            6: 'Construction',
+            7: 'Customer Service',
+            8: 'Distribution Shipping',
+            9: 'Design',
+            10: 'Education Teaching',
+            11: 'Engineering',
+            12: 'Facilities',
+            13: 'Finance',
+            14: 'General Business',
+            15: 'General Labor',
+            16: 'Government',
+            17: 'Grocery',
+            18: 'Health Care',
+            19: 'Hospitality',
+            20: 'Human Resources',
+            21: 'Information Technology',
+            22: 'Insurance',
+            23: 'Legal',
+            24: 'Journalism',
+            25: 'Maintenance/Repair',
+            26: 'Management',
+            27: 'Manufacturing',
+            28: 'Telecommunications',
+            29: 'Social Services',
+            30: 'Pharmaceutical',
+            31: 'QA Quality Control',
+            32: 'Real Estate',
+            33: 'Research',
+            34: 'Food Service',
+            35: 'Retail',
+            36: 'Skilled Labor Trades',
+            37: 'Strategy Planning',
+            38: 'Transportation',
+            39: 'Warehouse' };
+
+    for (var i in skillsload) {
+        $(".skill-name").append('<option value='+i+'>'+skillsload[i]+'</option>');
+    }
+
+    var levelLoad = { 1: 'Interested, 0 years experience',
+            2: 'Some experience, 1-2 years',
+            3: 'Intermediate, 3-5 years experience',
+            4: 'Skilled, 5+ years experience' };
+
+    for (var i in levelLoad) {
+        $(".level-name").append('<option value='+i+'>'+levelLoad[i]+'</option>');
     }
 });
 
@@ -107,3 +159,30 @@ $('#addressSubmit').on('click', function(event) {
             }
     });
 });
+
+$('#skillSubmit').on('click', function(event) {
+    event.preventDefault();
+    var skillArray = [];
+    for (var i = 0; i < 3; i++) {
+        var objectify = new Object;
+        objectify.skill_id = $('.skillrow > .form-group > div > select.skill-name option:selected')[i].value;
+        objectify.level_id = $('.skillrow > .form-group > div > select.level-name option:selected')[i].value;
+        skillArray.push(objectify);
+    }
+    var dataObject = {
+        english: $('#english').val(),
+        other_skills: $('#other_skills').val(),
+        skills: skillArray
+    };
+    console.log(dataObject);
+    var url = $('#skillsForm').attr('action');
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {'data':JSON.stringify(dataObject)},
+        success: function(response) {
+            $('#skillMessage').html('<p>'+response.message+'</p>');
+            }
+    });
+})
