@@ -6,6 +6,18 @@ body {
     margin: 0;
 }
 
+form, form label, form input, form textarea, form select {
+    margin-left: 20px;
+}
+
+#skillsForm select, #skillsForm textarea {
+    margin: 10px;
+}
+
+#skillsForm textarea {
+    width: 80%;
+}
+
 .logo {
     position: absolute;
     top: 0;
