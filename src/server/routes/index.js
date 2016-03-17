@@ -70,10 +70,13 @@ router.get('/login', helpers.loginRedirect, function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  console.log(req.body);
   passport.authenticate('local', function(err, user) {
     if (err) {
-      return next(err);
+      res.render('login',
+        { title: 'Alligator Jobs',
+          status: 'warning',
+          message: 'Email/Password combination incorrect!'
+        });
     } else {
       req.logIn(user, function(err) {
         if (err) {

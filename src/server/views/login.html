@@ -13,6 +13,13 @@
         <form class="form-horizontal" action="/login" method="post">
             <fieldset>
                 <legend>Login</legend>
+                <div class="container">
+                    {% if status %}
+                    <div class="alert alert-{{ status }}" role="alert">
+                        <h4>{{ message }}</h4>
+                    </div>
+                    {% endif %}
+                </div>
                 <div class="form-group">
                       <label class="col-md-4 control-label" for="emailinput">Email</label>
                       <div class="col-md-4">
