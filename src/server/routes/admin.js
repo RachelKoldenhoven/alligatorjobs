@@ -9,7 +9,15 @@ var queries = require("../../../queries2");
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Alligator Jobs', user: req.user? req.user.fname: ""  });
+  console.log(req.user);
+  queries.verifyAdmin(req.user).then(function(isAdmin) {
+    console.log(isAdmin);
+    if(isAdmin[0].admin) {
+      res.render('admin', { title: 'Alligator Jobs', user: req.user });
+    } else {
+      res.redirect('/');
+    }
+    });
 });
 
 module.exports = router;

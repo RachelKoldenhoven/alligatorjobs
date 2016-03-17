@@ -53,12 +53,11 @@ module.exports = {
 
     registerUser: function(newUser) {
         return knex.insert({
-            google_id: newUser.google_id,
             email: newUser.email,
             fname: newUser.fname,
             lname: newUser.lname,
             password: newUser.password
-        }).table('users').returning('id');
+        }).table('users').returning('*');
     },
 
     addNewUserInfo: function (id, fname, lname, phone, english, other_skills) {
@@ -124,5 +123,9 @@ module.exports = {
         })
         .where('user_id', user_id);
 
+    },
+
+    verifyAdmin: function(userId) {
+        return knex.column('admin').select().from('users').where('id', userId);
     }
 };

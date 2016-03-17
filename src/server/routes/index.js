@@ -18,7 +18,7 @@ router.get('/register', helpers.loginRedirect, function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-  console.log (req.body);
+  //console.log ("21", req.body);
   var fname = req.body.fname;
   var lname = req.body.lname;
   var email = req.body.email;
@@ -26,7 +26,6 @@ router.post('/register', function(req, res, next) {
   // check if email is unique
   queries.getUserByEmail(email)
     .then(function(data){
-      console.log('data: ' + data);
       // if email is in the database send an error
       if(data.length) {
         console.log('email taken');
@@ -37,15 +36,23 @@ router.post('/register', function(req, res, next) {
         // if email is not in the database insert it
         queries.registerUser({fname: fname, lname: lname, password: hashedPassword, email:email})
           .then(function(data) {
-            console.log('successfully added user' + data);
-            req.flash('message', {
-              status: 'success',
-              message: 'Welcome!'
-            });
-            return res.redirect('/login');
+            //console.log('successfully added user', data);
+            passport.authenticate('local', function(err, user) {
+              if (err) {
+                return next(err);
+              } else {
+                req.logIn(user, function(err) {
+                  if (err) {
+                    return next(err);
+                  } else {
+                    return res.redirect('/');
+                  }
+                });
+              }
+            })(req, res, next);
           })
           .catch(function(err) {
-            return res.send('crap');
+            return res.send('crap', err);
           });
       }
     })
@@ -80,19 +87,19 @@ router.get('/cultures', function(req, res, next) {
 });
 
 router.get('/cultures/:id', function(req, res, next) {
-    var cultureID = req.params.id;
-    queries.getSingleCulture(cultureID)
+  var cultureID = req.params.id;
+  queries.getSingleCulture(cultureID)
     .then(function(cultureData) {
-        queries.getCultureResources(cultureID)
+      queries.getCultureResources(cultureID)
         .then(function(resourceData) {
-            cultureData.resources = resourceData;
-            console.log(cultureData);
-            res.render('culture_profile', {
-                title: 'Culture Page',
-                user: req.user? req.user.fname: "",
-                cultureData: cultureData[0],
-                cultureResources: cultureData.resources
-                 });
+          cultureData.resources = resourceData;
+          console.log(cultureData);
+          res.render('culture_profile', {
+            title: 'Culture Page',
+            user: req.user? req.user.fname: "",
+            cultureData: cultureData[0],
+            cultureResources: cultureData.resources
+          });
         });
     });
 });
