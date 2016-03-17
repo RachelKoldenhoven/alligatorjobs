@@ -16,6 +16,7 @@ router.get('/:id', function(req, res, next) {
     if (!(req.user !== userID || isAdmin[0].admin)) {
       res.redirect('/');
     } else {
+      var isAdmin = true;
       queries.getUser(userID)
         .then(function (userData) {
           queries.getUserAddress(userID)
@@ -29,7 +30,8 @@ router.get('/:id', function(req, res, next) {
                     user: req.user,
                     userData: userData[0],
                     userAddress: userData.address[0],
-                    userSkills: workExpData
+                    userSkills: workExpData,
+                    isAdmin: isAdmin
                   })
                 });
             });
@@ -44,6 +46,7 @@ router.get('/:id/edit', function(req, res, next) {
     if (!(req.user !== userID || isAdmin[0].admin)) {
       res.redirect('/');
     } else {
+      var isAdmin = true;
       queries.getUser(userID)
         .then(function(userData) {
           queries.getUserAddress(userID)
@@ -58,7 +61,8 @@ router.get('/:id/edit', function(req, res, next) {
                     user: req.user,
                     userData: userData[0],
                     userAddress: userData.address[0],
-                    workExperience: workExpData
+                    workExperience: workExpData,
+                    isAdmin: isAdmin
                   })
                 });
             });
@@ -133,45 +137,39 @@ router.post('/:id/edit-skills', function(req, res, next) {
   var skillsOnly = skillsUpdate.skills;
   console.log('skills only', skillsOnly);
   //can add a catch to this later, but should never break
-  queries.verifyAdmin(req.user).then(function(isAdmin) {
-    if (!(req.user !== userID || isAdmin[0].admin)) {
-      res.redirect('/');
-    } else {
-      queries.getUserSkills(userID).del()
-        .then(function () {
-          skillsOnly.forEach(function (el) {
-            var newSkillObj = {}
-            if (el.skill_id || el.level_id) {
-              console.log('EL.SKILL_ID IS', el.skill_id);
-              newSkillObj = {
-                skill_id: parseInt(el.skill_id),
-                level_id: parseInt(el.level_id)
-              };
-              console.log("NEW SKILL OBJECT IS", newSkillObj);
-              queries.addNewSkill(userID, newSkillObj)
-                .then(function () {
-                })
-                .catch(function (err) {
-                  console.log("err is ", err);
-                })
-            }
-          })
+  queries.getUserSkills(userID).del()
+  .then(function() {
+    skillsOnly.forEach(function(el) {
+      var newSkillObj = {}
+      if (el.skill_id || el.level_id) {
+        console.log('EL.SKILL_ID IS', el.skill_id);
+        newSkillObj = {
+          skill_id: parseInt(el.skill_id),
+          level_id: parseInt(el.level_id)
+        };
+        console.log("NEW SKILL OBJECT IS", newSkillObj);
+        queries.addNewSkill(userID, newSkillObj)
+        .then(function() {
         })
-        .then(function () {
-          queries.addOtherSkill(userID, skillsUpdate)
-            .then(function () {
-              res.json({message: 'Skills information updated.'})
-            })
-            .catch(function (err) {
-              res.json({message: 'Something went wrong inserting your information.'})
-            })
+        .catch(function(err) {
+          console.log("err is ", err);
         })
-        .catch(function (err) {
-          console.log(err);
-          res.json('something is genuinely messed up.');
-        });
-    }
-  });
+      }
+    })
+  })
+  .then(function(){
+    queries.addOtherSkill(userID, skillsUpdate)
+    .then(function() {
+      res.json({message: 'Skills information updated.'})
+    })
+    .catch(function(err) {
+      res.json({message: 'Something went wrong inserting your information.'})
+    })
+  })
+  .catch(function(err) {
+      console.log(err);
+      res.json('something is genuinely messed up.');
+    });
 });
 
 
