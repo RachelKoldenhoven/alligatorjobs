@@ -107,3 +107,10 @@ $('#addressSubmit').on('click', function(event) {
             }
     });
 });
+
+$('#skillSubmit').on('click', function(event) {
+    event.preventDefault();
+    var dataObject = [];
+    //push each row into dataObject
+
+})
