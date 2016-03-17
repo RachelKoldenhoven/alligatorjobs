@@ -74,12 +74,20 @@ module.exports = {
 
     },
 
-    addNewSkill: function (user_id, skill_id, level_id) {
+    addNewSkill: function (user_id, skillObj) {
         return knex('work_exp')
         .insert({
             user_id: user_id,
-            skill_id: skill_id,
-            level_id: level_id
+            skill_id: skillObj.skill_id,
+            level_id: skillObj.level_id
+        });
+    },
+
+    updateSkill: function (user_id, skillObj) {
+        return knex('work_exp').where('user_id', user_id)
+        .update({
+            skill_id: skillObj.skill_id,
+            level_id: skillObj.level_id
         });
     },
 
