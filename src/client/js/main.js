@@ -185,4 +185,15 @@ $('#skillSubmit').on('click', function(event) {
             $('#skillMessage').html('<p>'+response.message+'</p>');
             }
     });
-})
+});
+
+$('#delete').on('click', function(event) {
+  event.preventDefault();
+  var arr = [];
+  var $sel = $('table tr input[type=checkbox]:checked');
+    for (var i=0; i <$sel.length; i++) {
+      arr.push(parseInt($sel[i].value));
+    }
+    console.log(arr);
+});
+

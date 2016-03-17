@@ -67,6 +67,17 @@ router.get('/:id/edit', function(req, res, next) {
   });
 });
 
+router.put('/:id/delete', function(req, res, next) {
+  var userID = req.params.id;
+  queries.getUser(userID).del()
+  .then(function(data) {
+    queries.getUserAddress.del()
+    .then(function(data) {
+      res.redirect('/');
+    });
+  });
+});
+
 router.put('/:id/edit-contact', function(req, res, next) {
   var userID = req.params.id;
   var userUpdate = req.body;
