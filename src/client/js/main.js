@@ -189,11 +189,20 @@ $('#skillSubmit').on('click', function(event) {
 
 $('#delete').on('click', function(event) {
   event.preventDefault();
-  var arr = [];
+  var deleteTargets = [];
   var $sel = $('table tr input[type=checkbox]:checked');
-    for (var i=0; i <$sel.length; i++) {
-      arr.push(parseInt($sel[i].value));
-    }
-    console.log(arr);
+  for (var i=0; i <$sel.length; i++) {
+    deleteTargets.push(parseInt($sel[i].value));
+  }
+  var url = '/admin/users/delete';
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: deleteTargets,
+      success: function() {
+        console.log("something happened!!!");
+      }
+    })
 });
 

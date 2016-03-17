@@ -32,7 +32,16 @@ router.get('/', function(req, res, next) {
    }
    });
 
-
+router.put('/admin/users/delete', function(req, res, next) {
+  var userID = req.params.id;
+  queries.getUser(userID).del()
+  .then(function(data) {
+    queries.getUserAddress.del()
+    .then(function(data) {
+      res.redirect('/');
+    });
+  });
+});
 
 
 
