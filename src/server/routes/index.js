@@ -111,8 +111,25 @@ router.get('/cultures/:id', function(req, res, next) {
     });
 });
 
-router.get('/public/user/:id', function(req, res, next) {
-  res.render('user', { title: 'Alligator Jobs', user: req.user? req.user.fname: "" });
-});
+  router.get('/public/user/:id', function(req, res, next) {
+    var userID = req.params.id;
+    queries.getUser(userID)
+      .then(function (userData) {
+        queries.getUserAddress(userID)
+          .then(function (addressData) {
+            userData.address = addressData;
+            queries.getUserWorkExp(userID)
+              .then(function (workExpData) {
+                workExpData = workExpData.rows;
+                res.render('user', {
+                  title: 'View Profile',
+                  userData: userData[0],
+                  userAddress: userData.address[0],
+                  userSkills: workExpData
+                })
+              });
+          });
+      });
+  });
 
 module.exports = router;
