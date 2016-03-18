@@ -5,11 +5,11 @@
 
 {% block content %}
     <div class="container">
-        <h3>Not a user yet? <a href='/register'>Register here</a></h3>
-
-        <a href="/auth/google"><img src="/image/google.png" alt="Sign In with Google button"></a>
-
-        <p>------------------OR------------------</p>
+        <div class="row" style="text-align: center;">
+            <h5><em>Not a user yet? <a href='/register'>Register here</a></em></h5>
+            <a href="/auth/google"><img id="google" src="/image/google.png" alt="Sign In with Google button"></a>
+        </div>
+        <hr>
         <form class="form-horizontal" action="/login" method="post">
             <fieldset>
                 <legend>Login</legend>

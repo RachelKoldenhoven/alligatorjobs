@@ -24,7 +24,8 @@ router.get('/', function(req, res, next) {
                 res.render('admin', {
                     title: 'Admin Dashboard',
                     adminData: adminData[0],
-                    usersData: usersData
+                    usersData: usersData,
+                    isAdmin: true
                 });
             });
        });

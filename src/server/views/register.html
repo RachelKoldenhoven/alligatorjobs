@@ -5,12 +5,10 @@
 
 {% block content %}
     <div class="container">
-        <h3>Already a user? <a href='/login'>Go to Login page</a></h3>
-
-        <a href="/auth/google"><img src="/image/google.png" alt="Register with Google button"></a>
-
-        <hr>
-        <h4>OR</h4>
+        <div class="row" style="text-align: center;">
+            <h5><em>Already a user? <a href='/login'>Go to Login page</a></em></h5>
+            <a href="/auth/google" style="text-align: center;"><img id="google" src="/image/google.png" alt="Register with Google button"></a>
+        </div>
         <hr>
         <div class="container">
             {% if status %}
