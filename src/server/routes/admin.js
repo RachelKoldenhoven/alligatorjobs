@@ -9,7 +9,6 @@ var queries = require("../../../queries2");
 
 
 router.get('/', function(req, res, next) {
-    console.log("slkdjfslkdjflsdkjf", req.user);
     if(!req.user) {
    res.redirect('/');
  }
@@ -32,15 +31,33 @@ router.get('/', function(req, res, next) {
    }
    });
 
-
-
-
-
-
-
-
+router.post('/users/delete', function(req, res, next) {
+  var usersID = req.body.deleteTargets;
+ for (var i = 0; i<usersID.length; i++) {
+   queries.getUser(usersID[i]).del()
+    .then(function() {
+      queries.getUserAddress(usersID[i]).del()
+      .then(function() {
+        queries.getUserSkills(usersID[i]).del()
+        .then(function() {
+          res.redirect('/admin');
+        })
+      })
+    })
+  }
+    res.redirect('/');
+  });
 
 
 });
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

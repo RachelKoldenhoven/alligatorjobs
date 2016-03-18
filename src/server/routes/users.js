@@ -68,6 +68,7 @@ router.get('/:id/edit', function(req, res, next) {
   });
 });
 
+
 router.put('/:id/edit-contact', function(req, res, next) {
   var userUpdate = req.body;
   queries.getUser(req.params.id).update({'fname': userUpdate.fname, 'lname': userUpdate.lname, 'email': userUpdate.email, 'phone':userUpdate.phone})
