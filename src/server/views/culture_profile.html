@@ -30,11 +30,18 @@
             </div>
             <div class="col-lg-4">
                 <div class="row">
-                    <h4><em>Foods</em></h4>
+                    <h4><em>American Population</em></h4>
+                    <p>
+                    {{cultureData.us_num}} {{cultureData.name}} refugees came
+                    to live in America in 2014 and {{cultureData.co_num}} of that number moved to Colorado.
+                    </p>
+                </div>
+                <div class="row">
+                    <h4><em>Traditonal Foods</em></h4>
                     <p>{{cultureData.foods}}</p>
                 </div>
                 <div class="row">
-                    <h4><em>Helpful resources</em></h4>
+                    <h4><em>Helpful Resources</em></h4>
                     <p>Contact these resource(s) for services such as translation and employee support</p>
                     {% for resource in cultureResources %}
                         <a href={{resource.website}}><p>{{resource.name}}</p></a>

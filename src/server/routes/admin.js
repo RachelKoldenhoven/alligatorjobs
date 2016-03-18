@@ -31,6 +31,7 @@ router.get('/', function(req, res, next) {
    }
    });
 
+
 router.post('/users/delete', function(req, res, next) {
   var usersID = req.body.deleteTargets;
  for (var i = 0; i<usersID.length; i++) {
@@ -45,7 +46,7 @@ router.post('/users/delete', function(req, res, next) {
       })
     })
   }
-    res.redirect('/');
+    // res.redirect('/');
   });
 
 
