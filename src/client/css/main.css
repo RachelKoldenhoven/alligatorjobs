@@ -66,4 +66,10 @@ footer {
 
 #phrasing {
     width: 80%;
+    border-radius: 20px;
+}
+
+.breathingRoom {
+    padding-left: 20px;
+    border-left: 1px solid #2d2d2d;
 }
