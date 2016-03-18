@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
    res.redirect('/');
  }
  queries.getUser(req.user).then(function(isAdmin) {
-   //console.log(isAdmin);
+
    if(!isAdmin[0].admin) {
      res.redirect('/');
    } else {
