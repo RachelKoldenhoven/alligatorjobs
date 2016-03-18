@@ -9,7 +9,6 @@ var passport = require('passport');
 
 
 router.get('/', function(req, res, next) {
-  //console.log(req.user);
   res.render('index', { title: 'Alligator Jobs', user: req.user });
 });
 
@@ -18,7 +17,6 @@ router.get('/register', helpers.loginRedirect, function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-  //console.log ("21", req.body);
   var fname = req.body.fname;
   var lname = req.body.lname;
   var email = req.body.email;
@@ -40,7 +38,6 @@ router.post('/register', function(req, res, next) {
         // if email is not in the database insert it
         queries.registerUser({fname: fname, lname: lname, password: hashedPassword, email:email})
           .then(function(data) {
-            //console.log('successfully added user', data);
             passport.authenticate('local', function(err, user) {
               if (err) {
                 return next(err);
@@ -100,7 +97,6 @@ router.get('/cultures/:id', function(req, res, next) {
       queries.getCultureResources(cultureID)
         .then(function(resourceData) {
           cultureData.resources = resourceData;
-          console.log(cultureData);
           res.render('culture_profile', {
             title: 'Culture Page',
             user: req.user,

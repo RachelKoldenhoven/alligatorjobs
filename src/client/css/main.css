@@ -63,3 +63,17 @@ footer {
     margin: 0;
     width: 100%;
 }
+
+#phrasing {
+    width: 80%;
+    border-radius: 20px;r
+}
+
+#google {
+    width: 300px;
+}
+
+.breathingRoom {
+    padding-left: 20px;
+    border-left: 1px solid #2d2d2d;
+}
