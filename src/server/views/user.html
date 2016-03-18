@@ -5,10 +5,18 @@
 
 {% block content %}
     <div class="container">
-        {% if user %}
-        <div class="row well">
-            <a href="/user/{{user}}/edit"><button class="btn btn-primary">Edit Profile</button></a>
-        </div>
+        {% if isAdmin %}
+            <div class="row well">
+                <a href="/user/{{userData.id}}/edit"><button class="btn btn-primary">Edit This Profile</button></a>
+                <a href="/public/user/{{userData.id}}"><button class="btn btn-info">View Public Version</button></a>
+                <a href="/user/{{userData.id}}/print" target="_blank"><button class="btn btn-warning">Print Profile</button></a>
+            </div>
+        {% else %}
+            <div class="row well">
+                <a href="/user/{{user}}/edit"><button class="btn btn-primary">Edit Profile</button></a>
+                <a href="/public/user/{{user}}"><button class="btn btn-info">View Public Profile</button></a>
+                <a href="/user/{{user}}/print" target="_blank"><button class="btn btn-warning">Print Profile</button></a>
+            </div>
         {% endif %}
         <div class="row">
             <h2>{{userData.fname}} {{userData.lname}}</h2>
@@ -18,23 +26,27 @@
             <h6>{{userAddress.city}}, {{userAddress.state}} {{userAddress.zip}}</h6>
             <br>
             <h3>Skills</h3><hr>
-            {% for skill in userSkills %}
-                <div class="col-lg-4 skillChunk">
-                    <div class="panel panel-success">
-                        <div class="panel-body">
-                            <h4>{{skill.skills_name}}</h4>
-                            <p>{{skill.levels_name}}</p>
+            <div class="row">
+                {% for skill in userSkills %}
+                    <div class="col-lg-4 skillChunk">
+                        <div class="panel panel-success">
+                            <div class="panel-body">
+                                <h4>{{skill.skills_name}}</h4>
+                                <p>{{skill.levels_name}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
             {% if userData.other_skills %}
+                <div class="row">
                     <div class="panel panel-success">
                         <div class="panel-body">
                             <h4>Other Skills and Skill Description</h4>
                             <p>{{userData.other_skills}}</p>
                         </div>
                     </div>
+                </div>
             {% endif %}
         </div>
     </div>
