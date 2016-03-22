@@ -5,6 +5,24 @@ var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
 var helpers = require('../lib/helpers');
 var passport = require('passport');
+var nodemailer = require('nodemailer');
+
+
+/// *** set up email for contact page *** ///
+// create reusable transporter object using the default SMTP transport
+
+var smtpConfig = {
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // use SSL
+  service: 'gmail',
+  auth: {
+    user: 'rkoldenhoven@gmail.com',
+    pass: 'shout twice minerals opportunity'
+  }
+};
+
+var transporter = nodemailer.createTransport(smtpConfig);
 
 
 
@@ -143,6 +161,27 @@ router.get('/contact', function(req, res, next) {
       title: 'Contact Us'
     })
   }
+});
+
+
+router.post('/contact', function(req, res, next) {
+  console.log(req.body);
+  var message = req.body.message;
+  var mailOptions = {
+    from: req.body.email,
+    to: 'rkoldenhoven@gmail.com',
+    subject: 'alligator jobs',
+    text: message
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      console.log(error);
+      res.json({yo: 'error'});
+    }else{
+      console.log('Message sent: ' + info.response);
+      res.json({yo: info.response});
+    };
+  });
 });
 
 module.exports = router;
