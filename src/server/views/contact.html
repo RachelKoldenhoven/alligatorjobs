@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
 
-</body>
-</html>
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <form class="form-horizontal" method="post" action="/register">
+        <fieldset>
+            <legend>Contact Us</legend>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="fname">First Name</label>
+                <div class="col-md-4">
+                    <input id="fname" name="fname" type="text" placeholder="" class="form-control input-md" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="lname">Last Name</label>
+                <div class="col-md-4">
+                    <input id="lname" name="lname" type="text" placeholder="" class="form-control input-md" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="email">Email</label>
+                <div class="col-md-4">
+                    <input id="email" name="email" type="email" placeholder="" class="form-control input-md" required="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Your Message</label>
+                    <textarea id="user_message" placeholder="Ask a question, submit a comment/suggestion, or report a bug." class="form-control col-lg-12"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4">
+                    <input type="submit" value="submit" class="btn btn-primary">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+
+{% endblock %}
