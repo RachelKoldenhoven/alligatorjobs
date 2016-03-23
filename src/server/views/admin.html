@@ -32,7 +32,7 @@
     </thead>
     <tbody>
     {%for user in usersData%}
-      <tr>
+      <tr id="{{user.id}}">
 
         <td>{{user.fname}}</td>
         <td>{{user.lname}}</td>
@@ -51,7 +51,7 @@
   </table>
 
   <button id="delete" class="btn btn-danger">Delete</button>
-
+ <!--  <form method="post" action="/admin/users/delete"> <input type="submit" name= "delete" value="Delete" class="btn-danger"> </form> -->
   <input type="submit" name="hired" value="Hired" class=".btn">
   <input type="submit" name="available" value="Available" class=".btn">
   <input type="submit" name="blocked" value="Block" class=".btn">
