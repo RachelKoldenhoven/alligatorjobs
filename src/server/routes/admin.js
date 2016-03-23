@@ -33,31 +33,33 @@ router.get('/', function(req, res, next) {
    });
 });
 
-function deleteAll (usersID) {
-  for (var i = 0; i<usersID.length; i++) {
-   queries.getUser(usersID[i]).del()
-    .then(function() {
-      queries.getUserAddress(usersID[i]).del()
-      .then(function() {
-        queries.getUserSkills(usersID[i]).del()
-        });
-    });
- }
+function deleteAll (usersIDs) {
+  var userPromises = usersIDs.map(function (id) {
+    var promises = [
+      queries.getUser(id).del(),
+      queries.getUserAddress(id).del(),
+      queries.getUserSkills(id).del()
+    ];
+
+    return Promise.all(promises);
+  });
+
+  return Promise.all(userPromises);
 }
 
 router.post('/users/delete', function(req, res, next) {
-    var usersID = req.body.deleteTargets;
-    deleteAll(usersID)
+    var usersIDs = req.body.deleteTargets;
+    console.log('routetargets', req.body.deleteTargets)
+    deleteAll(usersIDs)
         .then(function() {
-          res.redirect('/admin');
-    });
+//returns an Object of the deleted usersID back to the jquery
+//ajax which then upon success deletes it from the dom.
+          res.send(usersIDs);
+    })
+        .catch(function(err) {
+          console.log(err);
+        });
 });
-
-
-
-
-
-
 
 
 

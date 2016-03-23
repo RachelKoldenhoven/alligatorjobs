@@ -191,24 +191,28 @@ $('#delete').on('click', function(event) {
   event.preventDefault();
   var targets = [];
   var $sel = $('table tr input[type=checkbox]:checked');
+  console.log('$sel', $sel);
 
   for (var i = 0; i < $sel.length; i++) {
     targets.push($sel[i].value);
   }
   var payload = {};
+  console.log('targets', targets);
 
   payload['deleteTargets'] = targets;
 
-
+  console.log('payload', payload);
   var url = '/admin/users/delete';
-
     $.ajax({
       url: url,
       type: 'POST',
       data: JSON.stringify(payload),
       contentType: 'application/json; charset=utf-8',
-      success: function() {
-        console.log("something happened!!!");
+      success: function(res) {
+        function createRemove (el, index, array) {
+          return $('#' + el).empty();
+        }
+        res.forEach(createRemove);
       }
     });
 });
