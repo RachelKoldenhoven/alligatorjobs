@@ -17,23 +17,25 @@ var smtpConfig = {
   secure: true, // use SSL
   service: 'gmail',
   auth: {
-    user: 'rkoldenhoven@gmail.com',
-    pass: 'shout twice minerals opportunity'
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD
   }
 };
 
 var transporter = nodemailer.createTransport(smtpConfig);
 
 
-
+/// *** get request for homepage *** ///
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Alligator Jobs', user: req.user });
 });
 
+/// *** get request for register page *** ///
 router.get('/register', helpers.loginRedirect, function(req, res, next) {
   res.render('register', { title: 'Alligator Jobs', user: req.user});
 });
 
+/// *** handle post request for register page *** ///
 router.post('/register', function(req, res, next) {
   var fname = req.body.fname;
   var lname = req.body.lname;
@@ -80,10 +82,12 @@ router.post('/register', function(req, res, next) {
     });
 });
 
+/// *** get request for login page *** ///
 router.get('/login', helpers.loginRedirect, function(req, res, next) {
   res.render('login', { title: 'Alligator Jobs', user: req.user });
 });
 
+/// *** handle post request for login page *** ///
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user) {
     if (err) {
@@ -104,10 +108,12 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
+/// *** get culture pages *** ///
 router.get('/cultures', function(req, res, next) {
   res.render('cultures', { title: 'Alligator Jobs', user: req.user });
 });
 
+/// *** get culture pages by id ** ///
 router.get('/cultures/:id', function(req, res, next) {
   var cultureID = req.params.id;
   queries.getSingleCulture(cultureID)
@@ -165,21 +171,21 @@ router.get('/contact', function(req, res, next) {
 
 
 router.post('/contact', function(req, res, next) {
-  console.log(req.body);
+  //console.log(req.body);
   var message = req.body.message;
   var mailOptions = {
-    from: req.body.email,
-    to: 'rkoldenhoven@gmail.com',
+    replyTo: req.body.email,
+    to: process.env.EMAIL_USERNAME,
     subject: 'alligator jobs',
-    text: message
+    text: message + " from: " + req.body.fname + " " + req.body.lname
   };
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
-      console.log(error);
+      //console.log(error);
       res.json({yo: 'error'});
     }else{
-      console.log('Message sent: ' + info.response);
-      res.json({yo: info.response});
+      //console.log('Message sent: ' + info.response);
+      res.redirect('/');
     };
   });
 });
