@@ -5,25 +5,7 @@ var knex = require('../../../db/knex');
 var queries = require("../../../queries2");
 var helpers = require('../lib/helpers');
 var passport = require('passport');
-var nodemailer = require('nodemailer');
 var sendgrid  = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD);
-
-/// *** set up email for contact page *** ///
-// create reusable transporter object using the default SMTP transport
-
-var smtpConfig = {
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // use SSL
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD
-  }
-};
-
-var transporter = nodemailer.createTransport(smtpConfig);
-
 
 /// *** get request for homepage *** ///
 router.get('/', function(req, res, next) {

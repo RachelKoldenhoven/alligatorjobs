@@ -86,7 +86,7 @@ passport.use(new GoogleStrategy({
           email: profile.email,
           fname: profile.name.givenName,
           lname: profile.name.familyName
-        }
+        };
         queries.registerUserGoogle(newUser).then(function (userAdded) {
           //console.log('----- user:', req.user);
           //console.log("user id yo: " + id);
