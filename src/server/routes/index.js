@@ -6,7 +6,7 @@ var queries = require("../../../queries2");
 var helpers = require('../lib/helpers');
 var passport = require('passport');
 var nodemailer = require('nodemailer');
-
+var sendgrid  = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD);
 
 /// *** set up email for contact page *** ///
 // create reusable transporter object using the default SMTP transport
@@ -171,23 +171,24 @@ router.get('/contact', function(req, res, next) {
 
 
 router.post('/contact', function(req, res, next) {
-  //console.log(req.body);
   var message = req.body.message;
-  var mailOptions = {
-    replyTo: req.body.email,
-    to: process.env.EMAIL_USERNAME,
-    subject: 'alligator jobs',
-    text: message + " from: " + req.body.fname + " " + req.body.lname
-  };
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-      console.log(error);
-      res.json({yo: error});
-    }else{
-      //console.log('Message sent: ' + info.response);
+  var emailBody = message + " from: " + req.body.fname + " " + req.body.lname;
+
+  sendgrid.send({
+    to:       process.env.EMAIL_USERNAME,
+    from:     req.body.email,
+    subject:  'alligator jobs',
+    text:     emailBody
+  }, function(err, json) {
+    if (err) {
+      console.error(err);
+      res.json({yo: err});
+    } else {
       res.redirect('/');
-    };
+    }
+    console.log(json);
   });
+
 });
 
 module.exports = router;
