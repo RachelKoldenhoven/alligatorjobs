@@ -181,7 +181,7 @@ router.post('/contact', function(req, res, next) {
     text:     emailBody
   }, function(err, json) {
     if (err) {
-      console.error(err);
+      console.error("Error sending email: ", err, json);
       res.json({yo: err});
     } else {
       res.redirect('/');
